@@ -1,5 +1,5 @@
 import React from 'react'
 
 export default function Footer() {
-  return <div>ini footer</div>;
+  return <div>ini footer branch auth</div>;
 }
