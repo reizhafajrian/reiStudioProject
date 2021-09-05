@@ -72,8 +72,6 @@ export default function index() {
       </CContainer>
       </center>
 
-      <p>testttt</p>
-
     </div>
   );
 }
