@@ -5,21 +5,29 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "express": "nodemon server.js"
   },
   "dependencies": {
     "@coreui/coreui": "^4.0.1",
     "@coreui/react": "^4.0.0-rc.0",
     "bcrypt": "^5.0.1",
     "date-fns": "^2.11.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.1",
     "gray-matter": "^4.0.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.8",
     "next": "^11.0.0",
+    "next-connect": "^0.10.2",
     "node-sass": "^4.14.1",
+    "nodemon": "^2.0.12",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "remark": "^12.0.0",
-    "remark-html": "^12.0.0"
+    "remark-html": "^12.0.0",
+    "vhost": "^3.0.2"
   },
   "devDependencies": {
     "@svgr/webpack": "^5.5.0"

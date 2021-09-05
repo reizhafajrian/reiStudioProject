@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const User = new mongoose.Schema({
+const Admin = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -36,9 +36,9 @@ const User = new mongoose.Schema({
 let UserSchema = null;
 
 try {
-  UserSchema = mongoose.model("User", User);
+  UserSchema = mongoose.model("Admin", Admin);
 } catch (e) {
-  UserSchema = mongoose.model("User");
+  UserSchema = mongoose.model("Admin");
 }
 
 export default UserSchema;
