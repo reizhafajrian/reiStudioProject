@@ -67,7 +67,5 @@ export default function Login() {
         </div>
         </div>
 
-        <p>bang reja ganteng</p>
-
   );
 }
