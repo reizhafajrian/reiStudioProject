@@ -7,13 +7,7 @@ import {
   CHeaderNav,
   CNavItem,
   CNavLink,
-  CDropdown,
-  CDropdownToggle,
-  CDropdownMenu,
-  CDropdownItem,
-  CDropdownDivider,
   CForm,
-  CCollapse,
   CFormInput,
   CButton,
 } from "@coreui/react";
@@ -53,6 +47,7 @@ export default function HeaderTop() {
                   height: "40 !important",
                   borderRadius: "0px 10px 10px 0",
                   borderWidth: 0,
+                  fontSize:"14px"
                 }}
               />
             </CForm>
@@ -62,7 +57,7 @@ export default function HeaderTop() {
           className={
             "d-flex flex-col justify-content-between align-items-center"
           }
-          style={{ width: "150px" }}
+          style={{ width: "150px", fontSize:"12px"}}
         >
           <div
             style={{

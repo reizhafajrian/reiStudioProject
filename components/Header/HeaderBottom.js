@@ -7,15 +7,7 @@ import {
   CHeaderNav,
   CNavItem,
   CNavLink,
-  CDropdown,
-  CDropdownToggle,
-  CDropdownMenu,
-  CDropdownItem,
-  CDropdownDivider,
-  CForm,
-  CCollapse,
-  CFormInput,
-  CButton,
+
 } from "@coreui/react";
 import { theme } from "../../constant/theme.js";
 import { IC_CART, IC_SEARCH, IC_USER } from "../../assets";
@@ -31,7 +23,7 @@ export default function HeaderBottom() {
       }}
     >
       <CContainer fluid className={"px-0"}>
-        <CHeaderNav>
+        <CHeaderNav style={{ fontSize:"14px"}}>
           <CNavItem>
             <CNavLink href="#" active className={styles.navLinkHeaderBottom}>
               Home
