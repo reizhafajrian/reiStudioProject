@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import Button from "../components/Button/Button";
+import Image from "next/image";
 
 import {
   CContainer,
@@ -9,23 +11,28 @@ import {
   CFormInput,
   CButton,
   CLink,
+  CRow,
+  CCol,
+  CImage
 } from "@coreui/react";
-import { IMAGE_1 } from "../assets";
+import styles from "../styles/image.module.scss";
+import {IMAGE_1}  from "../assets";
 
-export default function Login() {
+
+export default function login() {
   return (
     <div>
       <Header />
 
-        <div style={{ display: "flex",height:"800px"}}>
+      <CContainer style={{ width: "1000px", height:"400px", marginTop:"30px"}}>
+        <CRow style={{margintop:"100px"}}>
+          <CCol style={{paddingLeft:"70px",}}>
+          <Image src={IMAGE_1} className={styles.Image1} />
+          </CCol>
 
-          <div style={{ width: "50%" }}>
-            <IMAGE_1 />
-          </div>
-
-          <div style={{ marginLeft: "31px", marginTop: "50px" }}>
-            <p> Sudah memiliki akun </p>
-            <CForm>
+          <CCol style={{ paddingLeft:"0px", paddingTop: "45px" }}>
+            <p><b>Sudah memiliki akun</b> </p>
+            <CForm style={{paddingTop: "15px"}}>
               <div className="mb-3"
                 style={{
                   height: "50px",
@@ -39,33 +46,35 @@ export default function Login() {
                   }} />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-3" style={{paddingTop:"10px"}}>
                 <CFormLabel htmlFor="exampleInputPassword1"
                   style={{
                     marginTop: "15px"
                   }}>Password</CFormLabel>
                 <CFormInput type="password" id="exampleInputPassword1" style={{
                   height: "40px",
-                  width: "430spx"
+                  width: "430px"
                 }} />
               </div>
 
-              <CButton type="submit"
-                style={{
+              <Button judul={"Login"}
+              style={{
                   height: "50px",
                   width: "270px",
-                  marginTop: "5px",
-                  backgroundColor: "#1BA0E2"
-                }}>
-                Login
-              </CButton>
+                  marginTop: "10px",
+                  backgroundColor: "#1BA0E2"}} />
+
             </CForm>
             <p style={{
-              marginTop: "10px;"
-            }}>Belum punya akun?<CLink href="#"><b> Daftar</b></CLink> </p>
-          </div>
-        </div>
-        </div>
+              marginTop: "10px"}}>Belum punya akun?<CLink href="/register" style={{textDecoration:"none", color:"#1BA0E2"}}><b> Daftar</b></CLink> </p>
+          </CCol>
+        </CRow>
+      </CContainer>
+
+      <Footer />
+
+    </div>
 
   );
 }
+

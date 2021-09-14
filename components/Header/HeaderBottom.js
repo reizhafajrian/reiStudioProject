@@ -11,7 +11,7 @@ import {
 } from "@coreui/react";
 import { theme } from "../../constant/theme.js";
 import { IC_CART, IC_SEARCH, IC_USER } from "../../assets";
-import styles from "../../styles/headerBottom.module.scss";
+import styles from "../../styles/componentstyle.module.scss";
 
 export default function HeaderBottom() {
   return (
@@ -22,10 +22,10 @@ export default function HeaderBottom() {
         padding: "0px 105px 0px 105px",
       }}
     >
-      <CContainer fluid className={"px-0"}>
-        <CHeaderNav style={{ fontSize:"14px"}}>
+      <CContainer fluid className={"px-0"} >
+        <CHeaderNav style={{ fontSize:"14px" }}>
           <CNavItem>
-            <CNavLink href="#" active className={styles.navLinkHeaderBottom}>
+            <CNavLink href="/" active className={styles.navLinkHeaderBottom}>
               Home
             </CNavLink>
           </CNavItem>
