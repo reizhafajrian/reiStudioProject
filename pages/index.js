@@ -52,20 +52,6 @@ export default function index() {
       </center>
 
       <center>
-<<<<<<< HEAD
-        <CContainer style={{ marginTop: "25px", width: "100%" }}>
-          <CRow>
-            <CCol>
-              <CCard
-                style={{
-                  width: "16rem",
-                  alignItems: "center",
-                }}
-              >
-                <IC_SPAREPART />
-                <CCardBody>
-                  <a href="#">Semua Sparepart</a>
-=======
         <CContainer style={{ marginTop: "25px", width: "904px", padding: "0px", backgroundColor:"blue"}}>
           <CRow>
             <CCol  sm="auto">
@@ -90,23 +76,10 @@ export default function index() {
                   <a style={{textDecoration:"none", color:"black"}} href="#">
                     Chat dengan CS
                   </a>
->>>>>>> a4e58dfd2e1163ad4201594a901747a7e77648ce
                 </CCardBody>
               </CCard>
             </CCol>
 
-<<<<<<< HEAD
-            <CCol>
-              <CCard
-                style={{
-                  width: "16rem",
-                  alignItems: "center",
-                }}
-              >
-                <IC_CUSTOMERSERVICE />
-                <CCardBody>
-                  <a href="#">Chat dengan CS</a>
-=======
             <CCol  sm="auto">
               <CCard style={{
                 width: '14rem',
@@ -117,29 +90,10 @@ export default function index() {
                   <a style={{textDecoration:"none", color:"black"}} href="/panggilmekanik">
                     Panggil Mekanik
                   </a>
->>>>>>> a4e58dfd2e1163ad4201594a901747a7e77648ce
                 </CCardBody>
               </CCard>
             </CCol>
 
-<<<<<<< HEAD
-            <CCol>
-              <CCard
-                style={{
-                  width: "16rem",
-                  alignItems: "center",
-                }}
-              >
-                <IC_PANGGILMEKANIK />
-                <CCardBody>
-                  <a href="#">Panggil Mekanik</a>
-                </CCardBody>
-              </CCard>
-            </CCol>
-          </CRow>
-        </CContainer>
-      </center>
-=======
           </CRow>
         </CContainer>
       </center>
@@ -152,7 +106,6 @@ export default function index() {
       <Sparepartterbaik />
       <Penilaian />
       <Footer />
->>>>>>> a4e58dfd2e1163ad4201594a901747a7e77648ce
     </div>
   );
 }
