@@ -1,10 +1,20 @@
 @import "./scss/coreui.scss";
+<<<<<<< HEAD
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap");
 .wrapper {
   width: 100%;
   @include ltr-rtl("padding-left", var(--cui-sidebar-occupy-start, 0));
   will-change: auto;
   @include transition(padding 0.15s);
+=======
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap');
+
+*{
+    padding:"0px";
+    margin:"0px";
+    font-family: 'Montserrat', sans-serif;
+    
+>>>>>>> a4e58dfd2e1163ad4201594a901747a7e77648ce
 }
 .example {
     &:not(:first-child) {

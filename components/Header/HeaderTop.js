@@ -24,7 +24,7 @@ export default function HeaderTop() {
         borderWidth: 0,
       }}
     >
-      <CContainer fluid className={"px-0 py-0"}>
+      <CContainer fluid className={"px-0 py-0" }>
         <CHeaderBrand href="#">Header</CHeaderBrand>
         <CHeaderNav>
           <CButton
@@ -83,7 +83,7 @@ export default function HeaderTop() {
             }}
           >
             <IC_USER />
-            <CNavLink className={"py-0 px-0 text-white"} href="#">
+            <CNavLink className={"py-0 px-0 text-white"} href="/login">
               Login
             </CNavLink>
           </div>

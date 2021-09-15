@@ -14,6 +14,8 @@ export default function FormRegister() {
 
         <CContainer style={{
             marginTop: "15px",
+            marginLeft:"auto",
+            marginRight:"auto",
             height: "525px",
             width: "454px"
 
