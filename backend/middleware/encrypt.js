@@ -1,4 +1,4 @@
-import bcrypt, { compare } from "bcrypt";
+import bcrypt from "bcrypt";
 
 export const encrypt = async (password) => {
   return await bcrypt
@@ -8,7 +8,7 @@ export const encrypt = async (password) => {
 };
 export const comparePassword = async (password, hash) => {
   return bcrypt
-    .compare(myPlaintextPassword, hash)
+    .compare(password, hash)
     .then((result) => true)
     .catch((err) => err);
 };
