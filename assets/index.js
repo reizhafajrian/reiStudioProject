@@ -15,6 +15,25 @@ import PRODUK_5 from "./img/produk_5.png";
 import PRODUK_6 from "./img/produk_6.png";
 import AKI from "./img/aki.png";
 import OLI from "./img/oli.png";
+import IMG_EXAMPLE from "./img/img_example.png";
 
-
-export { IC_USER, IC_CART, IC_SEARCH, IMAGE_1, IMAGE_2, IC_CUSTOMERSERVICE, IC_PANGGILMEKANIK, IC_SPAREPART, PROFILE, PRODUK_1, PRODUK_2, PRODUK_3, PRODUK_4, PRODUK_5, PRODUK_6, AKI, OLI };
+export {
+  IC_USER,
+  IC_CART,
+  IC_SEARCH,
+  IMAGE_1,
+  IMAGE_2,
+  IC_CUSTOMERSERVICE,
+  IC_PANGGILMEKANIK,
+  IC_SPAREPART,
+  PROFILE,
+  PRODUK_1,
+  PRODUK_2,
+  PRODUK_3,
+  PRODUK_4,
+  PRODUK_5,
+  PRODUK_6,
+  AKI,
+  OLI,
+  IMG_EXAMPLE,
+};
