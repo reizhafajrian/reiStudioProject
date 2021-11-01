@@ -20,7 +20,7 @@ export default function CardButton({ title, onClick, type }) {
   };
   return (
     <CButton
-      color={"link"}
+      color={"none"}
       className="card-button"
       style={{ width: "fit-content", padding: 0 }}
     >

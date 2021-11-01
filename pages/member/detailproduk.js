@@ -1,13 +1,21 @@
-import React from "react";
-import Pilihproduk from "../../components/pilihproduk";
+import React from 'react';
 import Header from "../../components/Header/Header";
-import { CContainer, CCol, CRow } from "@coreui/react";
+import Footer from "../../components/Footer/Footer";
+import PilihProduk from '../../components/PilihProduk';
+import Sparepartterbaik from '../../components/Sparepartterbaik';
+
 
 export default function detailproduk() {
-  return (
-    <div>
-      <Header />
-      <Pilihproduk />
-    </div>
-  );
+    return (
+        <div>
+            <Header />
+            <PilihProduk />
+
+            <Sparepartterbaik />
+
+            <Footer />
+        </div>
+    )
 }
+
+

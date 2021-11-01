@@ -1,14 +1,10 @@
 import React from "react";
-import { PROFILE } from "../assets";
 import {
     CContainer,
     CRow,
     CCol,
     CCard,
     CCardBody,
-    CCardImage,
-    CCardTitle,
-    CCardText
 } from "@coreui/react";
 import styles from "../styles/penilaian.module.scss";
 
@@ -21,9 +17,7 @@ export default function penilaian() {
                 <CCol sm="auto">
                     <CCard style={{ width: '18rem'}}>
                     <CCardBody>
-                        <div>
-                            <PROFILE />
-
+                        <div style={{width: "51px", height: "51px", backgroundColor: "#C4C4C4", borderRadius: "100%"}}>
                         </div>
                         <div className={styles.boxrate}>
                         Mekaniknya handal banget, penjelasannya mudah dimengerti
@@ -35,9 +29,7 @@ export default function penilaian() {
                 <CCol>
                     <CCard style={{ width: '18rem' }}>
                     <CCardBody>
-                        <div>
-                            <PROFILE/>
-
+                    <div style={{width: "51px", height: "51px", backgroundColor: "#C4C4C4", borderRadius: "100%"}}>
                         </div>
                         <div className={styles.boxrate}>
                         Sparepartnya asli, belinya juga gampang, jadi mudah buat dapetin kebutuhan motor
@@ -50,9 +42,7 @@ export default function penilaian() {
                 <CCol sm="auto">
                     <CCard style={{ width: '18rem' }}>
                     <CCardBody>
-                        <div>
-                            <PROFILE/>
-
+                    <div style={{width: "51px", height: "51px", backgroundColor: "#C4C4C4", borderRadius: "100%"}}>
                         </div>
                         <div className={styles.boxrate}>
                         Cuci kolongnya rapih banget, mobil aku berasa perbedaannya setelah pake servis ini

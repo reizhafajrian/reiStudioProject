@@ -1,62 +1,55 @@
 import React, { useState } from 'react';
+import { LINING } from '../../assets';
 import {
   CTable,
   CRow,
   CCol,
   CTableRow,
   CContainer,
+  CHeaderBrand,
 
 } from "@coreui/react";
 
 export default function FooterTop() {
   return (
-    <CContainer style={{ backgroundColor: "blueviolet", maxWidth: "100%", position: "relative", padding:"34px", height: "auto" }}>
+    <CContainer style={{ maxWidth: "100%", height: "366px", paddingTop: "68px", backgroundColor: "#F8F8F8" }}>
       <CRow style={{
-        padding: "0px"
+        paddingTop: "20px"
       }}>
-        <CCol style={{ paddingLeft: "0px", fontSize: "35px", backgroundColor:"blue" }}>
-          <a  style={{ color: "grey", textDecoration: "none"}} href="#">Header</a>
+        <CCol style={{ fontSize: "35px", textAlign: "center" }}>
+          <a style={{ color: "grey", textDecoration: "none", paddingTop: "0px" }} href="#">Header</a>
         </CCol>
-        <CCol >
-          <p style={{ fontSize: "14px", width: "250px", paddingLeft: "80px" }}>Jl. Pintu Air V No.53, RW.8, Ps. Baru, Kecamatan Sawah Besar, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta. 10710</p>
+        <CCol xs lg={3}>
+          <p style={{
+            fontSize: "14px",
+            width: "150px",
+          }}>Jl. Pintu Air V No.53, RW.8, Ps. Baru, Kecamatan Sawah Besar, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta. 10710</p>
         </CCol>
-        <CCol  style={{paddingLeft:"100px"}}>
-          <CTable>
-            <CTableRow>
-              <b>Social</b>
-            </CTableRow>
-            <CTableRow>
-              Twitter
-            </CTableRow>
-            <CTableRow>
-              Instagram
-            </CTableRow>
-            <CTableRow>
-              Facebook
-            </CTableRow>
-          </CTable>
+        <CCol xs lg={2}>
+          <CCol>
+            <CRow>
+              <div style={{paddingLeft:"0", display:"flex", flexDirection:"row", alignItems:"center"}}>
+            <div style={{width:"2px", height:"20px", backgroundColor:"#1BA0E2",}}></div>
+              <b style={{paddingLeft:"8px"}}>Social</b></div></CRow>
+            <div style={{paddingTop:"15px", paddingLeft:"8px"}}>
+            <CRow style={{paddingLeft:"8px"}}>Twitter</CRow>
+            <CRow>Instagram</CRow>
+            <CRow>Facebook</CRow>
+            </div>
+          </CCol>
         </CCol>
         <CCol>
-          <CTable>
-            <CTableRow border="1px">
-              <b>Main Menu</b>
-            </CTableRow>
-            <CTableRow>
-              Sparepart
-            </CTableRow>
-            <CTableRow>
-              Aki
-            </CTableRow>
-            <CTableRow>
-              Oli
-            </CTableRow>
-            <CTableRow>
-              Ban
-            </CTableRow>
-            <CTableRow>
-              Service
-            </CTableRow>
-          </CTable>
+            <CRow>
+              <div style={{paddingLeft:"0", display:"flex", flexDirection:"row", alignItems:"center"}}>
+            <div style={{width:"2px", height:"20px", backgroundColor:"#1BA0E2",}}></div>
+              <b style={{paddingLeft:"8px"}}>Main Menu</b></div></CRow>
+            <div style={{paddingTop:"15px", paddingLeft:"8px"}}>
+            <CRow>Sparepart</CRow>
+            <CRow>Aki</CRow>
+            <CRow>Oli</CRow>
+            <CRow>Ban</CRow>
+            <CRow>Service</CRow>
+            </div>
         </CCol>
       </CRow>
     </CContainer>

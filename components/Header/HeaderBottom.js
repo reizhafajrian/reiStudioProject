@@ -25,7 +25,7 @@ export default function HeaderBottom() {
       <CContainer fluid className={"px-0"} >
         <CHeaderNav style={{ fontSize:"14px" }}>
           <CNavItem>
-            <CNavLink href="/" active className={styles.navLinkHeaderBottom}>
+            <CNavLink href="/member" active className={styles.navLinkHeaderBottom}>
               Home
             </CNavLink>
           </CNavItem>
@@ -40,7 +40,7 @@ export default function HeaderBottom() {
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#" className={styles.navLinkHeaderBottom}>
+            <CNavLink href="member/Oli" className={styles.navLinkHeaderBottom}>
               Oli
             </CNavLink>
           </CNavItem>

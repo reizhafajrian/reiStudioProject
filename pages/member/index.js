@@ -3,12 +3,11 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Penilaian from "../../components/penilaian";
 import Sparepartterbaik from "../../components/Sparepartterbaik";
+import Sparepartlainnyaoli from "../../components/Sparepartlainnyaoli";
+import Sparepartlainnyaaki from "../../components/Sparepartlainnyaaki";
 import Image from "next/image";
 
 import { IMAGE_2 } from "../../assets";
-import { IC_SPAREPART } from "../../assets";
-import { IC_CUSTOMERSERVICE } from "../../assets";
-import { IC_PANGGILMEKANIK } from "../../assets";
 
 import {
   CCard,
@@ -55,15 +54,19 @@ export default function index() {
           </CRow>
         </CContainer>
       </center>
+      
+      <CContainer style={{ paddingLeft: "0px", width: "900px", marginTop:"63px" }}>
+      <h4>Sparepart Terbaik Untuk Kamu</h4>
+      </CContainer>
 
       <Sparepartterbaik />
       <Penilaian />
-      <div style={{ height: 20 }} />
-      <CContainer style={{ paddingLeft: "0px", width: "904px" }}>
+    
+      <CContainer style={{ paddingLeft: "0px", width: "900px", marginTop:"64px" }}>
         <h4>Sparepart Lainnya</h4>
       </CContainer>
-      <Sparepartterbaik type={false} />
-      <Sparepartterbaik type={false} />
+      <Sparepartlainnyaoli type={false} />
+      <Sparepartlainnyaaki type={false} />
 
       <Footer />
     </div>

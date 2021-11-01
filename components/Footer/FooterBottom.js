@@ -1,8 +1,4 @@
 import React, { useState } from 'react';
-import {
-    CContainer,
-
-} from "@coreui/react";
 
 export default function FooterBottom() {
     return (
@@ -12,7 +8,8 @@ export default function FooterBottom() {
             height:"50px",
             width:"100%",
             color:"white",
-            marginTop:"auto", marginBottom:"auto"
+            marginTop:"auto", marginBottom:"auto",
+            paddingTop:"20px;"
 
         }}>
             <center>

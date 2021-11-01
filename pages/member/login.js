@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Button from "../../components/Button/Button";
 import Image from "next/image";
 
 import {
@@ -15,7 +14,6 @@ import {
   CCol,
   CImage,
 } from "@coreui/react";
-import styles from "../../styles/image.module.scss";
 import { IMAGE_1 } from "../../assets/index";
 
 export default function login() {
@@ -25,7 +23,7 @@ export default function login() {
       <CContainer style={{ width: "1000px", marginTop: "30px" }}>
         <CRow className={"py-60"} style={{ margintop: "100px" }}>
           <CCol>
-            <Image src={IMAGE_1} width={568} height={568} objectFit={"cover"} />
+            <Image src={IMAGE_1} width={468} height={468} objectFit={"cover"} />
           </CCol>
           <CCol style={{ paddingLeft: "0px", paddingTop: "45px" }}>
             <p>
@@ -69,15 +67,14 @@ export default function login() {
                   }}
                 />
               </div>
-              <Button
+              <CButton
                 judul={"Login"}
                 style={{
                   height: "50px",
                   width: "270px",
                   marginTop: "10px",
                   backgroundColor: "#1BA0E2",
-                }}
-              />
+                }}>Login</CButton>
             </CForm>
             <p
               style={{

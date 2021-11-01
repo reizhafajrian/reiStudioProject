@@ -83,7 +83,7 @@ export default function HeaderTop() {
             }}
           >
             <IC_USER />
-            <CNavLink className={"py-0 px-0 text-white"} href="/login">
+            <CNavLink className={"py-0 px-0 text-white"} href="/member/login">
               Login
             </CNavLink>
           </div>
