@@ -12,20 +12,20 @@ import React from "react";
 //   cilSpeedometer,
 //   cilStar,
 // } from '@coreui/icons-react'
-import { AiOutlineDashboard } from "react-icons/ai";
+import Link from "next/link";
+import { HiViewGridAdd } from "react-icons/hi";
 import { MdInvertColors } from "react-icons/md";
 
-import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
+import { CNavGroup, CNavItem, CNavLink, CNavTitle } from "@coreui/react";
 
 const _nav = [
   {
-    component: CNavItem,
-    name: "Dashboard",
-    href: "../views/dashboard/Dashboard",
-    icon: <AiOutlineDashboard className={"nav-icon"} />,
+    component: Link,
+    name: "Add Category",
+    href: "/admin/home/dashboard",
+    icon: <HiViewGridAdd className={"nav-icon"} />,
     badge: {
       color: "info",
-      text: "NEW",
     },
   },
   {
@@ -33,9 +33,10 @@ const _nav = [
     name: "Theme",
   },
   {
-    component: CNavItem,
+    component: Link,
     name: "Colors",
-    href: "/theme/colors",
+    href: "/admin/home/color",
+
     icon: <MdInvertColors className={"nav-icon"} />,
   },
   // {

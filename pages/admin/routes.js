@@ -1,6 +1,8 @@
 import React from "react";
+// import colors from "./Colors";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
+const Colors = React.lazy(() => import("./Colors"));
 // const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -55,7 +57,8 @@ const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 
 const routes = [
   // { path: "/", exact: true, name: "Home" },
-  { path: "/admin", name: "/", component: Dashboard },
+  { path: "/admin/home/dashboard", name: "Home", component: Dashboard },
+  { path: "/admin/home/color", name: "Color", component: Colors },
   // { path: "/admin/layout/DefaultLayout", name: "/", component: Dashboard },
   // { path: "/admin/layout/DefaultLayout", name: "/", component: Dashboard },
   // { path: "/layout/DefaultLayout", name: "Dashboard", component: Dashboard },

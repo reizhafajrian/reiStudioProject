@@ -1,3 +1,4 @@
+import connectDB from "../app";
 import { comparePassword, encrypt } from "../middleware/encrypt";
 import { generateToken, verifyToken } from "../middleware/jwt";
 import Admin from "../models/Admin";
@@ -10,9 +11,13 @@ const {
 
 const AdminController = {
   login: async function (req, res, next) {
+
     const { email, password } = req.body;
-  
-    const user = await Admin.findOne({ email }, { password: 0, _id: 1, __v: 0 });
+
+    const user = await Admin.findOne(
+      { email },
+      { password: 0, _id: 1, __v: 0 }
+    );
     if (!user) {
       return res.status(401).json({
         status: 401,
