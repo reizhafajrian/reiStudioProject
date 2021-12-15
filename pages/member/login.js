@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Image from "next/image";
@@ -13,10 +13,74 @@ import {
   CRow,
   CCol,
   CImage,
+  CModal,
+  CSpinner,
+  CModalHeader,
+  CModalBody,
+  CModalTitle,
+  CModalFooter,
 } from "@coreui/react";
 import { IMAGE_1 } from "../../assets/index";
+import Cookies from "universal-cookie";
 
 export default function login() {
+  const [formLogin, setformLogin] = useState({
+    email: "",
+    password: "",
+  });
+  const [visible, setVisible] = useState(false);
+  const [modal, setmodal] = useState({
+    modal: false,
+    message: "",
+  });
+  const getUser = () => {
+    const cookies = new Cookies();
+    const user = cookies.get("user");
+    if (typeof user !== "undefined") {
+      window.location.href = "/member";
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const validate = formLogin.email.length > 0 && formLogin.password.length > 0;
+  const loginApi = async () => {
+    try {
+      if (validate) {
+        const cookies = new Cookies();
+        setVisible(true);
+        const res = await fetch("http://localhost:3000/api/member/login", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(formLogin),
+        })
+          .then((res) => res.json())
+          .catch((err) => console.log(err));
+        if (res.status === 200) {
+          setVisible(false);
+          console.log(res);
+          cookies.set("token", res.token, { path: "/" });
+          cookies.set("user", res.user, { path: "/" });
+          window.location.href = "/member";
+        } else {
+          setVisible(false);
+          setmodal({
+            modal: true,
+            message: "Login gagal, email atau password salah",
+          });
+        }
+        setVisible(false);
+      } else {
+        alert("Please fill all fields");
+      }
+    } catch (error) {
+      setVisible(false);
+      throw error;
+    }
+  };
   return (
     <div>
       <Header />
@@ -46,6 +110,9 @@ export default function login() {
                     height: "40px",
                     width: "430px",
                   }}
+                  onChange={(e) =>
+                    setformLogin({ ...formLogin, email: e.target.value })
+                  }
                 />
               </div>
 
@@ -61,6 +128,9 @@ export default function login() {
                 <CFormInput
                   type="password"
                   id="exampleInputPassword1"
+                  onChange={(e) =>
+                    setformLogin({ ...formLogin, password: e.target.value })
+                  }
                   style={{
                     height: "40px",
                     width: "430px",
@@ -74,7 +144,11 @@ export default function login() {
                   width: "270px",
                   marginTop: "10px",
                   backgroundColor: "#1BA0E2",
-                }}>Login</CButton>
+                }}
+                onClick={() => loginApi()}
+              >
+                Login
+              </CButton>
             </CForm>
             <p
               style={{
@@ -87,12 +161,56 @@ export default function login() {
                 style={{ textDecoration: "none", color: "#1BA0E2" }}
               >
                 <b> Daftar</b>
-              </CLink>{" "}
+              </CLink>
             </p>
           </CCol>
         </CRow>
       </CContainer>
-
+      <>
+        <CModal
+          className="d-flex align-items-center modal-loading-spinner"
+          visible={visible}
+          onClose={() => setVisible(false)}
+        >
+          <CSpinner />
+        </CModal>
+      </>
+      <>
+        <CModal
+          visible={modal.modal}
+          onClose={() =>
+            setmodal({
+              ...modal,
+              modal: !modal.modal,
+            })
+          }
+        >
+          <CModalHeader
+            onClose={() =>
+              setmodal({
+                ...modal,
+                modal: !modal.modal,
+              })
+            }
+          >
+            <CModalTitle>Login</CModalTitle>
+          </CModalHeader>
+          <CModalBody className="text-align-center">{modal.message}</CModalBody>
+          <CModalFooter>
+            <CButton
+              color="secondary"
+              onClick={() =>
+                setmodal({
+                  ...modal,
+                  modal: !modal.modal,
+                })
+              }
+            >
+              Close
+            </CButton>
+          </CModalFooter>
+        </CModal>
+      </>
       <Footer />
     </div>
   );

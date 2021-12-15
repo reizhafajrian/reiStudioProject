@@ -9,6 +9,6 @@ export const encrypt = async (password) => {
 export const comparePassword = async (password, hash) => {
   return bcrypt
     .compare(password, hash)
-    .then((result) => true)
+    .then((result) => result)
     .catch((err) => err);
 };

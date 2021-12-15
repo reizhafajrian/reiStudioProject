@@ -7,13 +7,13 @@ import {
   CHeaderNav,
   CNavItem,
   CNavLink,
-
 } from "@coreui/react";
 import { theme } from "../../constant/theme.js";
 import { IC_CART, IC_SEARCH, IC_USER } from "../../assets";
 import styles from "../../styles/componentstyle.module.scss";
 
 export default function HeaderBottom() {
+
   return (
     <CHeader
       style={{
@@ -22,35 +22,45 @@ export default function HeaderBottom() {
         padding: "0px 105px 0px 105px",
       }}
     >
-      <CContainer fluid className={"px-0"} >
-        <CHeaderNav style={{ fontSize:"14px" }}>
+      <CContainer fluid className={"px-0"}>
+        <CHeaderNav style={{ fontSize: "14px" }}>
           <CNavItem>
-            <CNavLink href="/member" active className={styles.navLinkHeaderBottom}>
+            <CNavLink
+              href="/member"
+              active
+              className={styles.navLinkHeaderBottom}
+            >
               Home
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#" className={styles.navLinkHeaderBottom}>
+            <CNavLink
+              href="/member/sparepart"
+              className={styles.navLinkHeaderBottom}
+            >
               Sparepart
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#" className={styles.navLinkHeaderBottom}>
+            <CNavLink href="/member/aki" className={styles.navLinkHeaderBottom}>
               Aki
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="member/Oli" className={styles.navLinkHeaderBottom}>
+            <CNavLink href="/member/oli" className={styles.navLinkHeaderBottom}>
               Oli
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#" className={styles.navLinkHeaderBottom}>
+            <CNavLink href="/member/ban" className={styles.navLinkHeaderBottom}>
               Ban
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#" className={styles.navLinkHeaderBottom}>
+            <CNavLink
+              href="/member/service"
+              className={styles.navLinkHeaderBottom}
+            >
               Service
             </CNavLink>
           </CNavItem>

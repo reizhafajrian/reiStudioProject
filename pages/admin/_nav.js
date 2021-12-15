@@ -14,28 +14,56 @@ import React from "react";
 // } from '@coreui/icons-react'
 import { AiOutlineDashboard } from "react-icons/ai";
 import { MdInvertColors } from "react-icons/md";
-
+import Link from "next/link";
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 
 const _nav = [
   {
-    component: CNavItem,
-    name: "Dashboard",
-    href: "../views/dashboard/Dashboard",
-    icon: <AiOutlineDashboard className={"nav-icon"} />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
+    component: CNavGroup,
+    name: "Create Product",
+    href: "/admin",
+
+    items: [
+      {
+        component: Link,
+        name: "Create Oli",
+        href: "/admin/app/create-oli",
+        icon: <MdInvertColors customClassName="nav-icon" />,
+      },
+      {
+        component: Link,
+        name: "Create Aki",
+        href: "/admin/app/create-aki",
+        icon: <MdInvertColors customClassName="nav-icon" />,
+      },
+      {
+        component: Link,
+        name: "Create",
+        href: "/admin/base/accordion",
+        icon: <MdInvertColors customClassName="nav-icon" />,
+      },
+      {
+        component: Link,
+        name: "Create Oli",
+        href: "/base/accordion",
+        icon: <MdInvertColors customClassName="nav-icon" />,
+      },
+      {
+        component: Link,
+        name: "Create Oli",
+        href: "/base/accordion",
+        icon: <MdInvertColors customClassName="nav-icon" />,
+      },
+    ],
   },
   {
     component: CNavTitle,
     name: "Theme",
   },
   {
-    component: CNavItem,
+    component: Link,
     name: "Colors",
-    href: "/theme/colors",
+    href: "/admin/app/dashboard",
     icon: <MdInvertColors className={"nav-icon"} />,
   },
   // {

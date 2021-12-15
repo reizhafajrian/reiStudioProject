@@ -1,18 +1,28 @@
 import React from "react";
-import Footer from "../../components/Footer/Footer";
+import ItemCard from "../../components/ItemCard";
 import Header from "../../components/Header/Header";
-import PanggilMekanikCard from "../../components/PanggilMekanikCard";
+import Footer from "../../components/Footer/Footer";
+import { CContainer } from "@coreui/react";
 
-
-export default function PanggilMekanik() {
+export default function panggilmekanik() {
   return (
     <div>
-        <Header />
-        <PanggilMekanikCard/>
-        <PanggilMekanikCard/>
-        <PanggilMekanikCard/>
-        <Footer />
-        </div>
-    
+      <Header />
+      <div
+        style={{
+          marginTop: "60px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h4>panggil mekanik</h4>
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+      </div>
+      <Footer />
+    </div>
   );
 }

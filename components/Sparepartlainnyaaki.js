@@ -100,7 +100,7 @@ export default function Sparepartlainnyaaki({ type = true }) {
       <CContainer style={{ paddingLeft: "0px", width: "904px" }}>
         <div style={{ height: type ? 63 : 30 }} />
         <CCol className={"d-flex flex-column"}>
-          <a className={"align-self-end"}  style={{textDecoration:"none", color:"#0080BF", fontWeight:"bold"}} href="/member/Aki">Lihat Semua Aki</a>
+          <a className={"align-self-end"}  style={{textDecoration:"none", color:"#0080BF", fontWeight:"bold"}} href="/member/aki">Lihat Semua Aki</a>
           <CRow>
             <Card />
           </CRow>

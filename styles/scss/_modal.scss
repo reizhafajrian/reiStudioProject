@@ -50,6 +50,7 @@
   height: subtract(100%, $modal-dialog-margin * 2);
 
   .modal-content {
+
     max-height: 100%;
     overflow: hidden;
   }
@@ -67,6 +68,7 @@
 
 // Actual modal
 .modal-content {
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -77,6 +79,7 @@
   background-color: var(--#{$variable-prefix}modal-content-bg, $modal-content-bg);
   background-clip: padding-box;
   border: $modal-content-border-width solid var(--#{$variable-prefix}modal-content-border-color, $modal-content-border-color);
+
   @include border-radius($modal-content-border-radius);
   @include box-shadow($modal-content-box-shadow-xs);
   // Remove focus outline from opened modal

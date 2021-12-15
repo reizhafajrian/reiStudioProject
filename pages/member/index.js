@@ -54,15 +54,19 @@ export default function index() {
           </CRow>
         </CContainer>
       </center>
-      
-      <CContainer style={{ paddingLeft: "0px", width: "900px", marginTop:"63px" }}>
-      <h4>Sparepart Terbaik Untuk Kamu</h4>
+
+      <CContainer
+        style={{ paddingLeft: "0px", width: "900px", marginTop: "63px" }}
+      >
+        <h4>Sparepart Terbaik Untuk Kamu</h4>
       </CContainer>
 
       <Sparepartterbaik />
       <Penilaian />
-    
-      <CContainer style={{ paddingLeft: "0px", width: "900px", marginTop:"64px" }}>
+
+      <CContainer
+        style={{ paddingLeft: "0px", width: "900px", marginTop: "64px" }}
+      >
         <h4>Sparepart Lainnya</h4>
       </CContainer>
       <Sparepartlainnyaoli type={false} />

@@ -1,10 +1,10 @@
 import React from "react";
-import OliCard from "../../components/ItemCard";
+import ItemCard from "../../components/ItemCard";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { CContainer } from "@coreui/react";
 
-export default function oli() {
+export default function aki() {
   return (
     <div>
       <Header />
@@ -17,13 +17,10 @@ export default function oli() {
           justifyContent: "center",
         }}
       >
-        <h4> Oli </h4>
-        <OliCard />
-        <OliCard />
-        <OliCard />
-        <OliCard />
-        <OliCard />
-        <OliCard />
+        <h4>Aki</h4>
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
       </div>
       <Footer />
     </div>

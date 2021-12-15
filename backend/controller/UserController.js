@@ -11,13 +11,14 @@ const {
 const UserController = {
   login: async function (req, res, next) {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }, { password: 0, _id: 1, __v: 0 });
+    const user = await User.findOne({ email }, { _id: 1, __v: 0 });
     if (!user) {
       return res.status(401).json({
         status: 401,
         message: "Invalid email or password",
       });
     }
+    console.log(user);
     const isMatch = await comparePassword(password, user.password);
     if (isMatch) {
       const token = await generateToken(user);
@@ -40,7 +41,7 @@ const UserController = {
       validations([
         check("name", "Full name is required!").not().isEmpty(),
         check("email", "Invalid email address").isEmail(),
-        check("valid", "Invalid").notEmpty().isBoolean(),
+        check("agreement", "Invalid").notEmpty().isBoolean(),
         check("phone", "Phone number is required!")
           .notEmpty()
           .isMobilePhone()
@@ -58,7 +59,7 @@ const UserController = {
           }),
       ])
     );
-    const { name, email, phone, password, valid } = req.body;
+    const { name, email, phone, password, agreement } = req.body;
     const passwordhash = await encrypt(password);
     const createUser = await User.create({
       name,
@@ -66,7 +67,7 @@ const UserController = {
       phone,
       password: passwordhash,
       role: 0,
-      privacy_policy: valid,
+      privacy_policy: agreement,
     });
     const user = await User.findOne(createUser, { password: 0, __v: 0 });
     res.status(201).send({

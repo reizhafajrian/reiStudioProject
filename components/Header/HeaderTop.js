@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CHeader,
   CContainer,
@@ -10,11 +10,40 @@ import {
   CForm,
   CFormInput,
   CButton,
+  CDropdown,
+  CDropdownToggle,
+  CDropdownMenu,
+  CDropdownItem,
+  CNavbarNav,
+  CDropdownDivider,
 } from "@coreui/react";
 import { theme } from "../../constant/theme.js";
 import { IC_CART, IC_SEARCH, IC_USER } from "../../assets";
+import Cookies from "universal-cookie";
 
 export default function HeaderTop() {
+  const cookies = new Cookies();
+  const [user, setuser] = useState({
+    privacy_policy: false,
+    _id: "",
+    name: "",
+    email: "",
+    phone: "",
+    role: 0,
+    created_at: "",
+  });
+  const getUser = () => {
+    const user = cookies.get("user");
+    if (typeof user !== "undefined") return setuser(user);
+  };
+  const logout = () => {
+    cookies.remove("token");
+    cookies.remove("user");
+    window.location.reload();
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <CHeader
       style={{
@@ -24,7 +53,7 @@ export default function HeaderTop() {
         borderWidth: 0,
       }}
     >
-      <CContainer fluid className={"px-0 py-0" }>
+      <CContainer fluid className={"px-0 py-0"}>
         <CHeaderBrand href="#">Header</CHeaderBrand>
         <CHeaderNav>
           <CButton
@@ -47,7 +76,7 @@ export default function HeaderTop() {
                   height: "40 !important",
                   borderRadius: "0px 10px 10px 0",
                   borderWidth: 0,
-                  fontSize:"14px"
+                  fontSize: "14px",
                 }}
               />
             </CForm>
@@ -57,7 +86,7 @@ export default function HeaderTop() {
           className={
             "d-flex flex-col justify-content-between align-items-center"
           }
-          style={{ width: "150px", fontSize:"12px"}}
+          style={{ width: "150px", fontSize: "12px" }}
         >
           <div
             style={{
@@ -83,9 +112,29 @@ export default function HeaderTop() {
             }}
           >
             <IC_USER />
-            <CNavLink className={"py-0 px-0 text-white"} href="/member/login">
-              Login
-            </CNavLink>
+            {user.name.length > 0 ? (
+              <CNavbarNav>
+                <CDropdown dark component="li" variant="nav-item">
+                  <CDropdownToggle className="py-0 px-0 text-white">
+                    {user.name}
+                  </CDropdownToggle>
+                  <CDropdownMenu>
+                    <CDropdownItem onClick={logout}>Keluar</CDropdownItem>
+                    {/* <CDropdownItem href="#">Another action</CDropdownItem>
+                    <CDropdownItem href="#">Something else here</CDropdownItem>
+                    <CDropdownDivider />
+                    <CDropdownItem href="#">Separated link</CDropdownItem> */}
+                  </CDropdownMenu>
+                </CDropdown>
+              </CNavbarNav>
+            ) : (
+              // <CNavLink className={"py-0 px-0 text-white"} href="/member/login">
+              //   {user.name}
+              // </CNavLink>
+              <CNavLink className={"py-0 px-0 text-white"} href="/member/login">
+                Login
+              </CNavLink>
+            )}
           </div>
         </div>
       </CContainer>

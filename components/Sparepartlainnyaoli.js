@@ -102,7 +102,7 @@ export default function Sparepartlainnyaoli({ type = true }) {
       <CContainer style={{ paddingLeft: "0px", width: "904px" }}>
         <div style={{ height: type ? 63 : 30 }} />
         <CCol className={"d-flex flex-column"}>
-        <a className={"align-self-end"} style={{textDecoration:"none", color:"#0080BF", fontWeight:"bold"}} href="/member/Oli">Lihat Semua Oli</a>
+        <a className={"align-self-end"} style={{textDecoration:"none", color:"#0080BF", fontWeight:"bold"}} href="/member/oli">Lihat Semua Oli</a>
           <CRow>
             <Card />
           </CRow>
