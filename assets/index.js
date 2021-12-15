@@ -14,7 +14,7 @@ import PRODUK_5 from "./img/produk_5.png";
 import PRODUK_6 from "./img/produk_6.png";
 import AKI from "./img/aki.png";
 import OLI from "./img/oli.png";
-import PRODUK_4A from "./img/produk_4a.png";
+// import PRODUK_4A from "./img/produk_4a.png";
 import LINING from "./icon/lining.svg";
 import SHOPPINGCART from "./icon/shoppingcart.svg";
 export {
@@ -34,7 +34,7 @@ export {
   PRODUK_6,
   AKI,
   OLI,
-  PRODUK_4A,
+  // PRODUK_4A,
   LINING,
   SHOPPINGCART
 };
