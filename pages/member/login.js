@@ -115,7 +115,6 @@ export default function login() {
                   }
                 />
               </div>
-
               <div className="mb-3" style={{ paddingTop: "10px" }}>
                 <CFormLabel
                   htmlFor="exampleInputPassword1"

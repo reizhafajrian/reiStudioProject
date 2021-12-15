@@ -29,8 +29,8 @@ app.prepare().then(() => {
   adminServer.get("/", (req, res) => {
     return app.render(req, res, "/admin", req.query);
   });
-  adminServer.get("/*", (req, res) => {
-    return app.render(req, res, `/admin${req.path}`, req.query);
+  adminServer.get("/admin/*", (req, res) => {
+    return app.render(req, res, `${req.path}`, req.query);
   });
 
   adminServer.all("*", (req, res) => {

@@ -1,7 +1,12 @@
 import React from "react";
+// import colors from "./Colors";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
+<<<<<<< HEAD
 const CreateOli = React.lazy(() => import("./views/createproduct/createoli"));
+=======
+const Colors = React.lazy(() => import("./Colors"));
+>>>>>>> main
 // const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -56,8 +61,13 @@ const CreateOli = React.lazy(() => import("./views/createproduct/createoli"));
 
 const routes = [
   // { path: "/", exact: true, name: "Home" },
+<<<<<<< HEAD
   { path: "/admin/app/create-oli", name: "Home", component: CreateOli },
   { path: "/admin/app/dashboard", name: "Color", component: Dashboard } /*  */,
+=======
+  { path: "/admin/home/dashboard", name: "Home", component: Dashboard },
+  { path: "/admin/home/color", name: "Color", component: Colors },
+>>>>>>> main
   // { path: "/admin/layout/DefaultLayout", name: "/", component: Dashboard },
   // { path: "/admin/layout/DefaultLayout", name: "/", component: Dashboard },
   // { path: "/layout/DefaultLayout", name: "Dashboard", component: Dashboard },

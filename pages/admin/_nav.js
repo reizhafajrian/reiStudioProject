@@ -12,8 +12,10 @@ import React from "react";
 //   cilSpeedometer,
 //   cilStar,
 // } from '@coreui/icons-react'
-import { AiOutlineDashboard } from "react-icons/ai";
+import Link from "next/link";
+import { HiViewGridAdd } from "react-icons/hi";
 import { MdInvertColors } from "react-icons/md";
+<<<<<<< HEAD
 import Link from "next/link";
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 
@@ -55,6 +57,20 @@ const _nav = [
         icon: <MdInvertColors customClassName="nav-icon" />,
       },
     ],
+=======
+
+import { CNavGroup, CNavItem, CNavLink, CNavTitle } from "@coreui/react";
+
+const _nav = [
+  {
+    component: Link,
+    name: "Add Category",
+    href: "/admin/home/dashboard",
+    icon: <HiViewGridAdd className={"nav-icon"} />,
+    badge: {
+      color: "info",
+    },
+>>>>>>> main
   },
   {
     component: CNavTitle,
@@ -63,7 +79,12 @@ const _nav = [
   {
     component: Link,
     name: "Colors",
+<<<<<<< HEAD
     href: "/admin/app/dashboard",
+=======
+    href: "/admin/home/color",
+
+>>>>>>> main
     icon: <MdInvertColors className={"nav-icon"} />,
   },
   // {
