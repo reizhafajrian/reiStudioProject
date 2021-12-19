@@ -48,12 +48,12 @@ export default function PilihProduk() {
             <CCol>
               <Image src={PRODUK_4} width={121} height={121} />
             </CCol>
-            <CCol>
+            {/* <CCol>
               <Image src={PRODUK_4A} width={121} height={121} />
             </CCol>
             <CCol>
               <Image src={PRODUK_4A} width={121} height={121} />
-            </CCol>
+            </CCol> */}
           </CRow>
         </CCol>
         <CCol style={{ marginTop: "30px", paddingLeft: "0px" }}>
