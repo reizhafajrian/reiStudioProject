@@ -22,6 +22,8 @@ import {
 } from "@coreui/react";
 import { IMAGE_1 } from "../../assets/index";
 import Cookies from "universal-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../utils/reduxData";
 
 export default function login() {
   const [formLogin, setformLogin] = useState({
@@ -45,6 +47,8 @@ export default function login() {
   }, []);
 
   const validate = formLogin.email.length > 0 && formLogin.password.length > 0;
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
   const loginApi = async () => {
     try {
       if (validate) {
@@ -61,10 +65,12 @@ export default function login() {
           .catch((err) => console.log(err));
         if (res.status === 200) {
           setVisible(false);
-          console.log(res);
+
           cookies.set("token", res.token, { path: "/" });
           cookies.set("user", res.user, { path: "/" });
-          window.location.href = "/member";
+          // console.log(res.user);
+        
+          // window.location.href = "/member";
         } else {
           setVisible(false);
           setmodal({

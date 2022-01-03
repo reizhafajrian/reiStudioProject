@@ -14,77 +14,61 @@ import React from "react";
 // } from '@coreui/icons-react'
 import Link from "next/link";
 import { HiViewGridAdd } from "react-icons/hi";
-import { MdInvertColors } from "react-icons/md";
-<<<<<<< HEAD
-import Link from "next/link";
+import { MdInvertColors, MdCreate,MdMoneyOff } from "react-icons/md";
+// import { MdInvertColors, } from "react-icons/io";
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 
 const _nav = [
   {
-    component: CNavGroup,
+    component: Link,
     name: "Create Product",
-    href: "/admin",
+    href: "/admin/app/create-product",
+    icon: <MdCreate className={"nav-icon"} />,
 
-    items: [
-      {
-        component: Link,
-        name: "Create Oli",
-        href: "/admin/app/create-oli",
-        icon: <MdInvertColors customClassName="nav-icon" />,
-      },
-      {
-        component: Link,
-        name: "Create Aki",
-        href: "/admin/app/create-aki",
-        icon: <MdInvertColors customClassName="nav-icon" />,
-      },
-      {
-        component: Link,
-        name: "Create",
-        href: "/admin/base/accordion",
-        icon: <MdInvertColors customClassName="nav-icon" />,
-      },
-      {
-        component: Link,
-        name: "Create Oli",
-        href: "/base/accordion",
-        icon: <MdInvertColors customClassName="nav-icon" />,
-      },
-      {
-        component: Link,
-        name: "Create Oli",
-        href: "/base/accordion",
-        icon: <MdInvertColors customClassName="nav-icon" />,
-      },
-    ],
-=======
+    // items: [
+    //   {
+    //     component: Link,
+    //     name: "Create Oli",
+    //     href: "/admin/app/create-oli",
+    //     icon: <MdInvertColors customClassName="nav-icon" />,
+    //   },
+    //   {
+    //     component: Link,
+    //     name: "Create Aki",
+    //     href: "/admin/app/create-aki",
+    //     icon: <MdInvertColors customClassName="nav-icon" />,
+    //   },
+    //   {
+    //     component: Link,
+    //     name: "Create",
+    //     href: "/admin/base/accordion",
+    //     icon: <MdInvertColors customClassName="nav-icon" />,
+    //   },
+    //   {
+    //     component: Link,
+    //     name: "Create Oli",
+    //     href: "/base/accordion",
+    //     icon: <MdInvertColors customClassName="nav-icon" />,
+    //   },
+    //   {
+    //     component: Link,
+    //     name: "Create Oli",
+    //     href: "/base/accordion",
+    //     icon: <MdInvertColors customClassName="nav-icon" />,
+    //   },
+    // ],
+  },
 
-import { CNavGroup, CNavItem, CNavLink, CNavTitle } from "@coreui/react";
-
-const _nav = [
   {
     component: Link,
-    name: "Add Category",
-    href: "/admin/home/dashboard",
-    icon: <HiViewGridAdd className={"nav-icon"} />,
-    badge: {
-      color: "info",
-    },
->>>>>>> main
-  },
-  {
-    component: CNavTitle,
-    name: "Theme",
+    name: "Transaksi",
+    href: "/admin/app/transaksi",
+    icon: <MdMoneyOff className={"nav-icon"} />,
   },
   {
     component: Link,
-    name: "Colors",
-<<<<<<< HEAD
-    href: "/admin/app/dashboard",
-=======
-    href: "/admin/home/color",
-
->>>>>>> main
+    name: "Chat",
+    href: "/admin/app/chat",
     icon: <MdInvertColors className={"nav-icon"} />,
   },
   // {

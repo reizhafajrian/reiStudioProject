@@ -1,17 +1,23 @@
-import { createStore } from 'redux'
+import { createStore } from "redux";
 
 const initialState = {
   sidebarShow: true,
-}
+  dataProduct: [],
+  transaksi: [],
+};
 
-const changeState = (state = initialState, { type, ...rest }) => {
-  switch (type) {
-    case 'set':
-      return { ...state, ...rest }
+const changeState = (state = initialState, action) => {
+  switch (action.type) {
+    case "set":
+      return { ...state, ...action.rest };
+    case "SET_PRODUCT":
+      return { ...state, dataProduct: action.product };
+    case "SET_TRANSAKSI":
+      return { ...state, transaksi: action.transaksi };
     default:
-      return state
+      return state;
   }
-}
+};
 
-const store = createStore(changeState)
-export default store
+const store = createStore(changeState);
+export default store;

@@ -31,6 +31,10 @@ const User = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  order: {
+    type: Array,
+    required: false,
+  },
 });
 
 let UserSchema = null;

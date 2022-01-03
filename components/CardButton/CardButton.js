@@ -7,7 +7,7 @@ import {
 } from "../../assets";
 
 export default function CardButton({ title, onClick, type }) {
-  const Icon = ({type}) => {
+  const Icon = ({ type }) => {
     if (type === "sparepart") {
       return <IC_SPAREPART />;
     }
@@ -30,7 +30,17 @@ export default function CardButton({ title, onClick, type }) {
             width: "14rem",
             alignItems: "center",
           }}
-          onClick={() => alert("test")}
+          onClick={() => {
+            if (type === "sparepart") {
+              window.location.href = "/member/sparepart";
+            }
+            if (type === "cs") {
+              window.location.href = "/member/cs";
+            }
+            if (type === "mekanik") {
+              window.location.href = "/member/service";
+            }
+          }}
         >
           <Icon type={type} />
           <CCardBody>

@@ -48,7 +48,11 @@ export default function index() {
           }}
         >
           <CRow className={"justify-content-between"}>
-            <CardButton title={"Semua Sparepart"} type={"sparepart"} />
+            <CardButton
+              title={"Semua Sparepart"}
+              type={"sparepart"}
+            
+            />
             <CardButton title={"Chat Dengan CS"} type={"cs"} />
             <CardButton title={"Panggil Mekanik"} type={"mekanik"} />
           </CRow>

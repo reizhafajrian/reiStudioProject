@@ -8,7 +8,10 @@ const generateToken = (user) => {
 const verifyToken = (token) => {
   return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) return false;
-    return decoded;
+    return {
+      status: true,
+      data: decoded,
+    };
   });
 };
 module.exports = {

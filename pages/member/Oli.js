@@ -5,6 +5,20 @@ import Footer from "../../components/Footer/Footer";
 import { CContainer } from "@coreui/react";
 
 export default function oli() {
+  const [data, setdata] = React.useState([]);
+  const getData = () => {
+    fetch("http://localhost:3000/api/admin/product?search=oli")
+      .then((res) => res.json())
+      .then((res) => {
+        setdata(res.data);
+      });
+  };
+  React.useEffect(() => {
+    getData();
+    // return () => {
+    //   cleanup;
+    // };
+  }, []);
   return (
     <div>
       <Header />
@@ -18,12 +32,9 @@ export default function oli() {
         }}
       >
         <h4> Oli </h4>
-        <OliCard />
-        <OliCard />
-        <OliCard />
-        <OliCard />
-        <OliCard />
-        <OliCard />
+        {data.map((item) => {
+          return <OliCard item={item} />;
+        })}
       </div>
       <Footer />
     </div>

@@ -35,40 +35,51 @@ const Modal = ({
   setRefresh,
 }) => {
   const [data, setdata] = useState({
-    title: "",
-    image1: "",
-    image2: "",
-    image3: "",
-    description: "",
+    name: "",
+    image_1: "",
+    image_2: "",
+    image_3: "",
+    desc: "",
     price: "",
     promo: "",
+    stock: "",
+    tag: "",
   });
 
   useEffect(() => {
     if (type === "edit") {
-      console.log(dataEdit);
       setdata({
         id: dataEdit._id,
-        title: dataEdit.title,
-        image: dataEdit.image,
-        description: dataEdit.description,
+        name: dataEdit.name,
+
+        image_1: dataEdit.image_1,
+        image_2: dataEdit.image_2,
+        image_3: dataEdit.image_3,
+        price: dataEdit.price,
+        desc: dataEdit.desc,
         tag: dataEdit.tag,
         link: dataEdit.link,
+        promo: dataEdit.promo,
+
         type: dataEdit.type,
+        stock: dataEdit.stock,
+        tag: dataEdit.tag,
       });
     }
   }, [type]);
 
   const handleSubmit = async () => {
     try {
-      console.log(data);
-      const postData = await fetch("http://localhost:3000/api/admin/article", {
+      fetch("http://localhost:3000/api/admin/product", {
         headers: {
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify(data),
-      });
+        body: JSON.stringify({ data: data }),
+      })
+        .then((res) => res.json())
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
 
       setRefresh(true);
     } catch (error) {
@@ -77,14 +88,15 @@ const Modal = ({
   };
   const handleEdit = async () => {
     try {
-      const postData = await fetch("http://localhost:3000/api/admin/article", {
+      const postData = await fetch("http://localhost:3000/api/admin/product", {
         headers: {
           "Content-Type": "application/json",
         },
         method: "PUT",
-        body: JSON.stringify(data),
+        body: JSON.stringify({ data: data }),
       });
-      setRefresh(true);
+      setRefresh(!isRefresh);
+      console.log(isRefresh);
     } catch (error) {
       throw error;
     }
@@ -109,16 +121,16 @@ const Modal = ({
         <CForm>
           <>
             <div className="mb-3">
-              <CFormLabel htmlFor="exampleFormControlInput1">title</CFormLabel>
+              <CFormLabel htmlFor="exampleFormControlInput1">name</CFormLabel>
               <CFormInput
                 type="text"
-                id="title"
-                value={data.title}
-                placeholder="title"
+                id="name"
+                value={data.name}
+                placeholder="name"
                 onChange={(e) =>
                   setdata({
                     ...data,
-                    title: e.target.value,
+                    name: e.target.value,
                   })
                 }
               />
@@ -130,12 +142,12 @@ const Modal = ({
               <CFormInput
                 type="text"
                 id="image"
-                value={data.image1}
+                value={data.image_1}
                 placeholder="link image 1"
                 onChange={(e) =>
                   setdata({
                     ...data,
-                    image1: e.target.value,
+                    image_1: e.target.value,
                   })
                 }
               />
@@ -147,12 +159,12 @@ const Modal = ({
               <CFormInput
                 type="text"
                 id="image"
-                value={data.image2}
+                value={data.image_2}
                 placeholder="link image 2"
                 onChange={(e) =>
                   setdata({
                     ...data,
-                    image2: e.target.value,
+                    image_2: e.target.value,
                   })
                 }
               />
@@ -164,12 +176,27 @@ const Modal = ({
               <CFormInput
                 type="text"
                 id="image"
-                value={data.image3}
+                value={data.image_3}
                 placeholder="link image 3"
                 onChange={(e) =>
                   setdata({
                     ...data,
-                    image3: e.target.value,
+                    image_3: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlInput1">Tag</CFormLabel>
+              <CFormInput
+                type="text"
+                value={data.tag}
+                id="tag"
+                placeholder="Tag"
+                onChange={(e) =>
+                  setdata({
+                    ...data,
+                    tag: e.target.value,
                   })
                 }
               />
@@ -185,6 +212,21 @@ const Modal = ({
                   setdata({
                     ...data,
                     price: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlInput1">Stock</CFormLabel>
+              <CFormInput
+                type="text"
+                value={data.stock}
+                id="tag"
+                placeholder="Stock Barang"
+                onChange={(e) =>
+                  setdata({
+                    ...data,
+                    stock: e.target.value,
                   })
                 }
               />
@@ -211,11 +253,11 @@ const Modal = ({
               <CFormTextarea
                 id="exampleFormControlTextarea1"
                 rows="3"
-                value={data.description}
+                value={data.desc}
                 onChange={(e) =>
                   setdata({
                     ...data,
-                    description: e.target.value,
+                    desc: e.target.value,
                   })
                 }
               ></CFormTextarea>
@@ -236,16 +278,20 @@ const Modal = ({
   );
 };
 
-const TableTrue = () => {
-  // const filterArray = state.data.article.filter((item) => item.type === type);
+const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
+  const data = useSelector((state) => state.dataProduct);
 
   return (
     <CTable color="dark" striped>
       <CTableHead>
         <CTableRow>
           <CTableHeaderCell scope="col">#</CTableHeaderCell>
-          <CTableHeaderCell scope="col">Judul</CTableHeaderCell>
-          <CTableHeaderCell scope="col">Tag</CTableHeaderCell>
+          <CTableHeaderCell scope="col">name</CTableHeaderCell>
+          <CTableHeaderCell scope="col">stock</CTableHeaderCell>
+          <CTableHeaderCell scope="col">promo</CTableHeaderCell>
+          <CTableHeaderCell scope="col">price</CTableHeaderCell>
+          <CTableHeaderCell scope="col">tag</CTableHeaderCell>
+          <CTableHeaderCell scope="col">desc</CTableHeaderCell>
           <CTableHeaderCell scope="col" className={"text-center"}>
             Aksi
           </CTableHeaderCell>
@@ -253,22 +299,35 @@ const TableTrue = () => {
       </CTableHead>
       <CTableBody>
         <>
-          <CTableRow>
-            <CTableDataCell scope={"row"}>{1}</CTableDataCell>
-            <CTableDataCell>{"example"}</CTableDataCell>
-            <CTableDataCell>{"example"}</CTableDataCell>
-            <CTableDataCell className={"text-center"}>
-              <CButton color="primary" onClick={(e) => editFuntion(e, article)}>
-                Edit
-              </CButton>
-              <CButton
-                color="danger"
-                onClick={(e) => deleteFunction(e, article)}
-              >
-                Delete
-              </CButton>
-            </CTableDataCell>
-          </CTableRow>
+          {data.map((item, index) => {
+            return (
+              <>
+                <CTableRow key={item._id}>
+                  <CTableDataCell scope={"row"}>{++index}</CTableDataCell>
+                  <CTableDataCell>{item.name}</CTableDataCell>
+                  <CTableDataCell>{item.stock}</CTableDataCell>
+                  <CTableDataCell>{item.promo}</CTableDataCell>
+                  <CTableDataCell>{item.price}</CTableDataCell>
+                  <CTableDataCell>{item.tag}</CTableDataCell>
+                  <CTableDataCell>{item.desc}</CTableDataCell>
+                  <CTableDataCell className={"text-center"}>
+                    <CButton
+                      color="primary"
+                      onClick={(e) => editFuntion(e, item)}
+                    >
+                      Edit
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      onClick={(e) => deleteFunction(e, item)}
+                    >
+                      Delete
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              </>
+            );
+          })}
         </>
       </CTableBody>
     </CTable>
@@ -296,11 +355,12 @@ const createoli = () => {
   };
   const getData = async () => {
     try {
-      const postData = await fetch("http://localhost:3000/api/admin/article");
+      const postData = await fetch("http://localhost:3000/api/admin/product");
+
       const res = await postData.json();
       dispatch({
-        type: "SET_ARTICLE",
-        article: [...res],
+        type: "SET_PRODUCT",
+        product: [...res.data],
       });
     } catch (error) {
       throw error;
@@ -308,7 +368,7 @@ const createoli = () => {
   };
   const deleteArticle = async (e, article) => {
     try {
-      const postData = await fetch(`http://localhost:3000/api/admin/article`, {
+      const postData = await fetch(`http://localhost:3000/api/admin/product`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -331,17 +391,18 @@ const createoli = () => {
       </CButton>
 
       <TableTrue
-      //   state={state}
-      //   type={true}
-      //   deleteFunction={deleteArticle}
-      //   getdata={getData}
-      //   editFuntion={edit}
+        state={state}
+        type={true}
+        deleteFunction={deleteArticle}
+        getdata={getData}
+        editFuntion={edit}
       />
 
       <Modal
         visible={showModal}
         setVisible={setshowModal}
         type={type}
+        isRefresh={refresh}
         dataEdit={data}
         setRefresh={setrefresh}
       />

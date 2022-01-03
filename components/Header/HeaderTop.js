@@ -98,8 +98,8 @@ export default function HeaderTop() {
             }}
           >
             <IC_CART />
-            <CNavLink className={"py-0 px-0 text-white"} href="#">
-              Keranjang
+            <CNavLink className={"py-0 px-0 text-white"} href="/member/bill">
+              Order
             </CNavLink>
           </div>
           <div

@@ -11,7 +11,10 @@ const {
 const UserController = {
   login: async function (req, res, next) {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }, { _id: 1, __v: 0 });
+    const user = await User.findOne(
+      { email },
+      { _id: 1, __v: 0, password: 0, order: 0,  }
+    );
     if (!user) {
       return res.status(401).json({
         status: 401,
