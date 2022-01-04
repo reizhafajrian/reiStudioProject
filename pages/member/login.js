@@ -70,7 +70,7 @@ export default function login() {
           cookies.set("user", res.user, { path: "/" });
           // console.log(res.user);
         
-          // window.location.href = "/member";
+          window.location.href = "/member";
         } else {
           setVisible(false);
           setmodal({

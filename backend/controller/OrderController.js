@@ -9,7 +9,8 @@ const OderController = {
     const { data } = req.body;
     let example = [];
     const product = await ProductSchema.findOne({ _id: data.data._id });
-    const temp = data.total - product.stock;
+    const temp = data.data.total - product.stock;
+
     if (temp >= 0) {
       product.stock = temp;
       product.save();

@@ -10,10 +10,10 @@ const BillCard = ({ item }) => {
   const [star, setstar] = useState(0);
   const [comment, setComment] = useState("");
   const valid = star > 0 && comment.length > 0;
+  console.log(item);
   const postComment = async () => {
     const cookie = new Cookies();
     const user = cookie.get("user");
-
     if (valid) {
       Put(`/member/review?id=${item.data._id}`, {
         data: {
@@ -72,15 +72,16 @@ const BillCard = ({ item }) => {
                           : item.status}
                       </div>
                     </div>
-                    {typeof item.data.resi !== "undefined" && (
+                    {typeof item.no_resi !== "undefined" && (
                       <>
                         <div className="d-flex flex-row justify-content-between">
                           <strong>Jasa Pengiriman</strong>
-                          <div>{item.data.resi}</div>
+                          <div>{item.jenis_pengiriman}</div>
                         </div>
                         <div className="d-flex flex-row justify-content-between">
                           <strong>Nomor Resi</strong>
-                          <div>{item.data.noresi}</div>
+
+                          <div>{item.no_resi}</div>
                         </div>
                       </>
                     )}
