@@ -39,8 +39,9 @@ const Login = () => {
   const checkLogin = () => {
     const cookies = new Cookies();
     const user = cookies.get("user-admin");
-    if (typeof user !== "undefined") {
-      window.location.href = "/admin";
+
+    if (user !== "undefined") {
+       window.location.href = "/admin/";
     }
   };
   useEffect(() => {
@@ -85,7 +86,10 @@ const Login = () => {
                         <CButton
                           color="primary"
                           className="px-4"
-                          onClick={() => postLogin()}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            postLogin();
+                          }}
                         >
                           Login
                         </CButton>
