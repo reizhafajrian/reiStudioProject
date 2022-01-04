@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   CButton,
@@ -13,8 +13,39 @@ import {
   CInputGroupText,
   CRow,
 } from "@coreui/react";
-
+import { Post } from "../../utils/api";
+import Cookies from "universal-cookie";
 const Login = () => {
+  const [data, setdata] = useState({
+    email: "",
+    password: "",
+  });
+  const postLogin = async () => {
+    const cookies = new Cookies();
+    Post("/admin/login", data).then((res) => {
+      if (res.isLogin) {
+        cookies.set("user-admin", res.data, { path: "/" });
+        cookies.set("token-admin", res.token, { path: "/" });
+
+        window.location.href = "/admin";
+      } else {
+        setmodal({
+          modal: true,
+          message: res.data.message,
+        });
+      }
+    });
+  };
+  const checkLogin = () => {
+    const cookies = new Cookies();
+    const user = cookies.get("user-admin");
+    if (typeof user !== "undefined") {
+      window.location.href = "/admin";
+    }
+  };
+  useEffect(() => {
+    checkLogin();
+  }, []);
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -33,6 +64,9 @@ const Login = () => {
                       <CFormInput
                         placeholder="Username"
                         autoComplete="username"
+                        onChange={(e) => {
+                          setdata({ ...data, email: e.target.value });
+                        }}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -41,24 +75,31 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         autoComplete="current-password"
+                        onChange={(e) => {
+                          setdata({ ...data, password: e.target.value });
+                        }}
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton
+                          color="primary"
+                          className="px-4"
+                          onClick={() => postLogin()}
+                        >
                           Login
                         </CButton>
                       </CCol>
-                      <CCol xs={6} className="text-right">
+                      {/* <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0">
                           Forgot password?
                         </CButton>
-                      </CCol>
+                      </CCol> */}
                     </CRow>
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard
+              {/* <CCard
                 className="text-white bg-primary py-5"
                 style={{ width: "44%" }}
               >
@@ -82,7 +123,7 @@ const Login = () => {
                     </Link>
                   </div>
                 </CCardBody>
-              </CCard>
+              </CCard> */}
             </CCardGroup>
           </CCol>
         </CRow>
@@ -91,5 +132,4 @@ const Login = () => {
   );
 };
 
-console.log("hello nft")
 export default Login;

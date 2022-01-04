@@ -6,7 +6,7 @@ module.exports = {
         and: [/\.(js|ts)x?$/],
       },
 
-      use: ["@svgr/webpack"]
+      use: ["@svgr/webpack"],
     });
 
     return config;
@@ -15,5 +15,18 @@ module.exports = {
     useSuspense: false,
     wait: true,
   },
-
+  async redirects() {
+    return [
+      {
+        source: "/admin",
+        destination: "/admin/app/create-product",
+        permanent: false,
+      },
+      {
+        source: "/",
+        destination: "/member/",
+        permanent: false,
+      },
+    ];
+  },
 };

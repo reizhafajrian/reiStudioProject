@@ -30,18 +30,21 @@ const AdminController = {
         const token = await generateToken(user);
         return res.status(200).json({
           status: 200,
+          isLogin: true,
           user: user,
           token: token,
         });
       } else {
         res.status(400).json({
           status: 400,
+          isLogin: false,
           message: "Invalid email or password",
         });
       }
     } else {
       res.status(200).json({
         status: 200,
+        isLogin: false,
         message: "You are not an admin",
       });
     }
@@ -76,12 +79,12 @@ const AdminController = {
     const { name, email, phone, password, valid } = req.body;
     const token = authorization.split(" ")[1];
     const result = await verifyToken(token);
-    if (result.user.role !== 1) {
-      return res.status(401).json({
-        status: 401,
-        message: "You are not an admin",
-      });
-    }
+    // if (result.user.role !== 1) {
+    //   return res.status(401).json({
+    //     status: 401,
+    //     message: "You are not an admin",
+    //   });
+    // }
     const passwordhash = await encrypt(password);
     const createUser = await Admin.create({
       name,
