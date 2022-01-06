@@ -25,6 +25,17 @@ import formatter from "../utils/currency";
 import Cookies from "universal-cookie";
 import { Get, Post } from "../utils/api";
 
+import dynamic from "next/dynamic";
+import "react-chat-widget/lib/styles.css";
+const Test = () => {
+  return <Widget />;
+};
+// const Chat = React.lazy(() => <Widget />);
+const WidgetComponent = dynamic(() => import("../components/Chat.js"), {
+  ssr: false,
+});
+const { Widget } = WidgetComponent;
+
 export default function PilihProduk({ item }) {
   const [count, setcount] = useState(0);
 
@@ -32,51 +43,53 @@ export default function PilihProduk({ item }) {
     const cookies = new Cookies();
     const user = cookies.get("user");
     const token = cookies.get("token");
+    console.log(user,"user")
+    if (typeof user !== "undefined") {
+      const post = await fetch("http://localhost:3000/api/member/pay", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        method: "POST",
+        body: JSON.stringify({
+          price: count * item.price,
+          email: user.email,
+          first_name: user.name,
+          last_name: user.name,
+          phone: user.phone,
+        }),
+      }).then((res) => res.json());
 
-    const post = await fetch("http://localhost:3000/api/member/pay", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      method: "POST",
-      body: JSON.stringify({
-        price: count * item.price,
-        email: user.email,
-        first_name: user.name,
-        last_name: user.name,
-        phone: user.phone,
-      }),
-    }).then((res) => res.json());
-
-    window.snap.pay(post.transaction.token, {
-      onSuccess: async (result) => {},
-      onPending: async (result) => {
-        Get(`/member/pay?id=${result.order_id}`).then((res) => {
-          if (res.response.transaction_status === "pending") {
-            Post("/member/createorder", {
-              data: {
-                order_id: res.response.order_id,
+      window.snap.pay(post.transaction.token, {
+        onSuccess: async (result) => {},
+        onPending: async (result) => {
+          Get(`/member/pay?id=${result.order_id}`).then((res) => {
+            if (res.response.transaction_status === "pending") {
+              Post("/member/createorder", {
                 data: {
-                  ...item,
-                  total: count,
-                  total_price: count * item.price,
+                  order_id: res.response.order_id,
+                  data: {
+                    ...item,
+                    total: count,
+                    total_price: count * item.price,
+                  },
                 },
-              },
-            }).then((res) => {
-              if (res.status === false) {
-                alert("Stock is not enough");
-              } else {
-                alert("Success");
-              }
-            });
-          }
-        });
-      },
-      onError: async (result) => {
-        return alert("Error");
-        // return settemp(temp.concat(result));
-      },
-    });
+              }).then((res) => {
+                if (res.status === false) {
+                  alert("Stock is not enough");
+                } else {
+                  alert("Success");
+                }
+              });
+            }
+          });
+        },
+        onError: async (result) => {
+          return alert("Error");
+          // return settemp(temp.concat(result));
+        },
+      });
+    }
   };
   return (
     <>
@@ -182,7 +195,7 @@ export default function PilihProduk({ item }) {
                   </CButton>
                 </CCol>
                 <CCol>
-                  <CButton
+                  {/* <CButton
                     style={{
                       width: "200px",
                       fontSize: "12px",
@@ -192,7 +205,7 @@ export default function PilihProduk({ item }) {
                     }}
                   >
                     Chat Dengan Admin
-                  </CButton>
+                  </CButton> */}
                 </CCol>
               </CRow>
               <p style={{ fontSize: "14px" }}>{item.desc}</p>
@@ -242,6 +255,9 @@ export default function PilihProduk({ item }) {
           <b>Sparepart Lainnya</b>
         </h4> */}
       </CContainer>
+      <div>
+        <WidgetComponent />
+      </div>
     </>
   );
 }

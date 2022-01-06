@@ -162,7 +162,7 @@ export default function login() {
             >
               Belum punya akun?
               <CLink
-                href="/register"
+                href="/member/register"
                 style={{ textDecoration: "none", color: "#1BA0E2" }}
               >
                 <b> Daftar</b>

@@ -14,7 +14,7 @@ import React from "react";
 // } from '@coreui/icons-react'
 import Link from "next/link";
 import { HiViewGridAdd } from "react-icons/hi";
-import { MdInvertColors, MdCreate,MdMoneyOff } from "react-icons/md";
+import { MdInvertColors, MdCreate, MdMoneyOff } from "react-icons/md";
 // import { MdInvertColors, } from "react-icons/io";
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 
@@ -64,6 +64,12 @@ const _nav = [
     name: "Transaksi",
     href: "/admin/app/transaksi",
     icon: <MdMoneyOff className={"nav-icon"} />,
+  },
+  {
+    component: Link,
+    name: "Garansi",
+    href: "/admin/app/garansi",
+    icon: <MdInvertColors className={"nav-icon"} />,
   },
   {
     component: Link,

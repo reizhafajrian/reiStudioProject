@@ -13,7 +13,7 @@ const UserController = {
     const { email, password } = req.body;
     const user = await User.findOne(
       { email },
-      { _id: 1, __v: 0, password: 0, order: 0,  }
+      { _id: 1, __v: 0, password: 0, order: 0 }
     );
     if (!user) {
       return res.status(401).json({
@@ -62,12 +62,13 @@ const UserController = {
           }),
       ])
     );
-    const { name, email, phone, password, agreement } = req.body;
+    const { name, email, phone, password, agreement, alamat } = req.body;
     const passwordhash = await encrypt(password);
     const createUser = await User.create({
       name,
       email,
       phone,
+      address: alamat,
       password: passwordhash,
       role: 0,
       privacy_policy: agreement,

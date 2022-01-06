@@ -28,9 +28,9 @@ import {
 } from "@coreui/react";
 import { GetStaticProps } from "next";
 import React, { useEffect, useState } from "react";
-import { CSVDownload, CSVLink } from "react-csv";
+import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
-import { Get, Put } from "../../../../utils/api";
+import { Get, Post, Put } from "../../../../utils/api";
 
 const Modal = ({
   visible,
@@ -166,7 +166,7 @@ const TableTrue = ({
   setRefresh,
 }) => {
   const data = useSelector((state) => state.transaksi);
-
+  const [Modal, setModal] = useState(false);
   const setResi = (item, string) => {
     Put("/admin/transaksi/", {
       data: {
@@ -176,20 +176,49 @@ const TableTrue = ({
     });
     window.location.reload();
   };
+  useEffect(() => {
+    console.log(data, "ini data");
+  }, [data]);
+  const [dataModal, setdataModal] = useState({
+    data: {
+      name: "",
+    },
+  });
+  const modalShow = (item) => {
+    setModal(!Modal);
+    setdataModal(item);
+  };
+  const garansiFunc = (e, item, order, type) => {
+    switch (type) {
+      case "approve":
+        Post("/admin/approve", {
+          ...item,
+          order,
+        });
+        break;
+      case "reject":
+        Post("/admin/reject", {
+          ...item,
+          order,
+        });
+        break;
+
+      default:
+        break;
+    }
+  };
   const calculateDta = () => {
     const empty = [];
     const temp = data;
     for (let i = 0; i < temp.length; i++) {
       for (let j = 0; j < temp[i].order.length; j++) {
-        if (typeof temp[i].order[j].garansi === "undefined") {
+        if (typeof temp[i].order[j].garansi !== "undefined") {
           empty.push(temp[i].order[j].data);
         }
       }
     }
     return empty;
   };
-  useEffect(() => {}, [data]);
-
   return (
     <>
       <CButton>
@@ -212,18 +241,21 @@ const TableTrue = ({
             <CTableHeaderCell scope="col">tag</CTableHeaderCell>
             <CTableHeaderCell scope="col">desc</CTableHeaderCell>
             <CTableHeaderCell scope="col">status</CTableHeaderCell>
-            <CTableHeaderCell scope="col">resi</CTableHeaderCell>
+            <CTableHeaderCell scope="col">
+              alasan klaim garansi
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col">aksi</CTableHeaderCell>
 
             {/* <CTableHeaderCell scope="col" className={"text-center"}>
-            Aksi
-          </CTableHeaderCell> */}
+              Aksi
+            </CTableHeaderCell> */}
           </CTableRow>
         </CTableHead>
         <CTableBody>
           <>
             {data.map((item2, index2) => {
               return item2.order.map((item, index) => {
-                if (typeof item.garansi === "undefined") {
+                if (typeof item.garansi !== "undefined") {
                   return (
                     <>
                       <CTableRow key={item.order_id}>
@@ -235,8 +267,8 @@ const TableTrue = ({
                         <CTableDataCell>{item.data.tag}</CTableDataCell>
                         <CTableDataCell>{item.data.desc}</CTableDataCell>
                         <CTableDataCell>
-                          <CDropdown>
-                            <CDropdownToggle color="secondary">
+                          <CDropdown aria-disabled>
+                            <CDropdownToggle color="secondary" disabled>
                               {typeof item.status === "string"
                                 ? item.status
                                 : "Status Belum DiPilih"}
@@ -261,12 +293,43 @@ const TableTrue = ({
                             </CDropdownMenu>
                           </CDropdown>
                         </CTableDataCell>
-                        <CTableDataCell className={"text-center"}>
+                        <CTableDataCell>{item.garansi.reason}</CTableDataCell>
+
+                        <CTableDataCell
+                          className={"text-center d-flex flex-col"}
+                        >
+                          <CButton
+                            color="success"
+                            onClick={() => modalShow(item2)}
+                          >
+                            Hubungi User
+                          </CButton>
+
                           <CButton
                             color="primary"
-                            onClick={(e) => editFuntion(e, item)}
+                            className="mx-2 "
+                            disabled={
+                              typeof item.garansi.approve !== "undefined" &&
+                              item.garansi.approve
+                            }
+                            onClick={(e) =>
+                              garansiFunc(e, item2, item, "approve")
+                            }
                           >
-                            Tambah Resi
+                            Setujui
+                          </CButton>
+                          <CButton
+                            color="primary"
+                            className="mx-2 bg-danger"
+                            disabled={
+                              typeof item.garansi.approve !== "undefined" &&
+                              item.garansi.approve
+                            }
+                            onClick={(e) =>
+                              garansiFunc(e, item2, item, "reject")
+                            }
+                          >
+                            tolak
                           </CButton>
                         </CTableDataCell>
                       </CTableRow>
@@ -278,11 +341,56 @@ const TableTrue = ({
           </>
         </CTableBody>
       </CTable>
+
+      <CModal visible={Modal} onClose={() => setModal(!Modal)}>
+        <CModalHeader onClose={() => setModal(!Modal)}>
+          <CModalTitle>Detail User</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CForm>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlTextarea1">
+                Nama
+              </CFormLabel>
+              <CFormInput
+                id="exampleFormControlTextarea1"
+                value={dataModal.name}
+              ></CFormInput>
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlTextarea1">
+                Email
+              </CFormLabel>
+              <CFormInput
+                id="exampleFormControlTextarea1"
+                value={dataModal.email}
+              ></CFormInput>
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlTextarea1">
+                Phone
+              </CFormLabel>
+              <CFormInput
+                id="exampleFormControlTextarea1"
+                value={dataModal.phone}
+              ></CFormInput>
+            </div>
+            <CButton
+              type="button"
+              color="secondary"
+              className="mx-3"
+              onClick={() => setModal(!Modal)}
+            >
+              Close
+            </CButton>
+          </CForm>
+        </CModalBody>
+      </CModal>
     </>
   );
 };
 
-const createoli = () => {
+const garansi = () => {
   const [refresh, setrefresh] = useState(false);
   const [showModal, setshowModal] = useState(false);
   const [type, settype] = useState("");
@@ -335,8 +443,8 @@ const createoli = () => {
   return (
     <>
       {/* <CButton color="primary" className={"mb-2"} onClick={create}>
-        Create New
-      </CButton> */}
+          Create New
+        </CButton> */}
 
       <TableTrue
         state={state}
@@ -359,4 +467,4 @@ const createoli = () => {
     </>
   );
 };
-export default createoli;
+export default garansi;

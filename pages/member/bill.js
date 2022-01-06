@@ -4,13 +4,24 @@ import Header from "../../components/Header/Header";
 import { Get, Post, Put } from "../../utils/api";
 import formatter from "../../utils/currency";
 import ReactStars from "react-rating-stars-component";
-import { CButton } from "@coreui/react";
+import {
+  CButton,
+  CForm,
+  CFormInput,
+  CFormLabel,
+  CFormTextarea,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
+} from "@coreui/react";
 import Cookies from "universal-cookie";
 const BillCard = ({ item }) => {
   const [star, setstar] = useState(0);
   const [comment, setComment] = useState("");
   const valid = star > 0 && comment.length > 0;
-  console.log(item);
+
   const postComment = async () => {
     const cookie = new Cookies();
     const user = cookie.get("user");
@@ -33,6 +44,21 @@ const BillCard = ({ item }) => {
         },
       });
     }
+  };
+  const [Reason, setReason] = useState("");
+  const [Modal, setModal] = useState(false);
+  const modalShow = () => {
+    setModal(true);
+  };
+  const handleSubmit = async (e) => {
+    const cookie = new Cookies();
+    const user = cookie.get("user");
+    e.preventDefault();
+    Post("/member/garansi", {
+      ...item,
+      user,
+      reason: Reason,
+    });
   };
   return (
     <>
@@ -114,6 +140,23 @@ const BillCard = ({ item }) => {
                             <CButton className="my-4" onClick={postComment}>
                               Save
                             </CButton>
+                            {typeof item.garansi !== "undefined" &&
+                            typeof item.garansi.approve !== "undefined" ? (
+                              item.garansi.approve ? (
+                                <CButton className="my-4" disabled>
+                                  permintaan garansi telah diterima admin akan
+                                  menghubungi anda
+                                </CButton>
+                              ) : (
+                                <CButton className="my-4" disabled>
+                                  permintaan garansi telah ditolak
+                                </CButton>
+                              )
+                            ) : (
+                              <CButton className="my-4" disabled >
+                                Permintaan Garansi di proses
+                              </CButton>
+                            )}
                           </div>
                         </div>
                       ) : (
@@ -154,6 +197,37 @@ const BillCard = ({ item }) => {
           </div>
         </div>
       </div>
+
+      <CModal visible={Modal} onClose={() => setModal(!Modal)}>
+        <CModalHeader onClose={() => setModal(!Modal)}>
+          <CModalTitle>Klaim Garansi</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CForm onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlTextarea1">
+                Mengapa Anda Ingin Mengembalikan Barang
+              </CFormLabel>
+              <CFormTextarea
+                id="exampleFormControlTextarea1"
+                rows="3"
+                onChange={(e) => setReason(e.target.value)}
+              ></CFormTextarea>
+            </div>
+            <CButton type="submit" color="primary">
+              Save changes
+            </CButton>
+            <CButton
+              type="button"
+              color="secondary"
+              className="mx-3"
+              onClick={() => setModal(!Modal)}
+            >
+              Close
+            </CButton>
+          </CForm>
+        </CModalBody>
+      </CModal>
     </>
   );
 };

@@ -5,6 +5,7 @@ const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 const CreateOli = React.lazy(() => import("./views/createproduct/createoli"));
 const Transaksi = React.lazy(() => import("./views/transaksi/index"));
 const Chat = React.lazy(() => import("./views/chat/index"));
+const Garansi = React.lazy(() => import("./views/garansi/garansi.js"));
 // const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -64,6 +65,7 @@ const routes = [
   // { path: "/admin/app/dashboard", name: "Color", component: Dashboard } /*  */,
   { path: "/admin/app/transaksi", name: "Color", component: Transaksi } /*  */,
   { path: "/admin/app/chat", name: "Color", component: Chat } /*  */,
+  { path: "/admin/app/garansi", name: "Color", component: Garansi } /*  */,
   // { path: "/admin/layout/DefaultLayout", name: "/", component: Dashboard },
   // { path: "/admin/layout/DefaultLayout", name: "/", component: Dashboard },
   // { path: "/layout/DefaultLayout", name: "Dashboard", component: Dashboard },

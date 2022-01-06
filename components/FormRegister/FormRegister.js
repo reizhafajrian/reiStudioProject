@@ -14,7 +14,10 @@ import {
   CModalFooter,
   CCol,
   CFormFeedback,
+  CFormTextarea,
 } from "@coreui/react";
+import { Post, Put } from "../../utils/api";
+import Cookies from "universal-cookie";
 
 export default function FormRegister() {
   const [register, setregister] = useState({
@@ -23,6 +26,7 @@ export default function FormRegister() {
     phone: "",
     password: "",
     confirmPassword: "",
+    alamat: "",
     agreement: false,
   });
   const check =
@@ -31,15 +35,24 @@ export default function FormRegister() {
     register.phone.length > 0 &&
     register.password.length > 0 &&
     register.confirmPassword.length > 0 &&
+    register.alamat &&
     register.agreement === true;
   const [visible, setVisible] = useState(false);
   const [modal, setmodal] = useState({
     modal: false,
     message: "",
   });
+  const createUserChat = async (user) => {
 
+
+    const res = await Post(`/chat`, {
+      user,
+    });
+
+    return res;
+  };
   const createUser = async () => {
-    return await fetch("http://localhost:3000/api/member/register", {
+    const test = await fetch("http://localhost:3000/api/member/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,6 +61,8 @@ export default function FormRegister() {
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));
+    await createUserChat(test.user);
+    return test;
   };
   const registerHandler = async (e) => {
     try {
@@ -102,10 +117,10 @@ export default function FormRegister() {
   return (
     <CContainer
       style={{
-        marginTop: "15px",
+        marginTop: "30px",
         marginLeft: "auto",
         marginRight: "auto",
-        height: "525px",
+        height: "800px",
         width: "454px",
       }}
     >
@@ -147,6 +162,28 @@ export default function FormRegister() {
               setregister({ ...register, email: event.target.value });
             }}
           />
+        </div>
+        <div
+          style={{
+            marginTop: "10px",
+          }}
+        >
+          <CFormLabel>Alamat</CFormLabel>
+          <CFormTextarea
+            id="alamat"
+            rows="3"
+            value={register.alamat}
+            onChange={(e) => {
+              setregister({ ...register, alamat: e.target.value });
+            }}
+          ></CFormTextarea>
+          {/* <CFormInput
+            type="phone"
+            value={register.alamat}
+            onChange={(event) => {
+              setregister({ ...register, alamat: event.target.value });
+            }}
+          /> */}
         </div>
 
         <div
