@@ -75,6 +75,7 @@ export default function PilihProduk({ item }) {
                   },
                 },
               }).then((res) => {
+                console.log(res,"res");
                 if (res.status === false) {
                   alert("Stock is not enough");
                 } else {

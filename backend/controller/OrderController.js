@@ -9,7 +9,7 @@ const OderController = {
     const { data } = req.body;
     let example = [];
     const product = await ProductSchema.findOne({ _id: data.data._id });
-    const temp = data.data.total - product.stock;
+    const temp = product.stock -data.data.total ;
 
     if (temp >= 0) {
       product.stock = temp;
@@ -34,7 +34,7 @@ const OderController = {
     return res.status(200).json({
       code: 200,
       status: false,
-      message: "Stock is not enough",
+      message: product,
     });
   },
 };

@@ -45,10 +45,10 @@ const ChatController = {
     const data = {
       // you can use your own logic to generate random UID and name
       // only uid has to be unique
-      uid: req.body.user._id,
-      name: req.body.user.name,
+      uid: req.body._id,
+      name: req.body.name,
     };
-    console.log(req.body)
+   
     axios
       .post(`${url}/users`, JSON.stringify(data), {
         headers,
@@ -58,12 +58,12 @@ const ChatController = {
         requestAuthToken(response.data.data.uid)
           .then((token) => {
             console.log("Success:" + JSON.stringify(token));
-
             res.json(token);
           })
           .catch((error) => console.error("Error:", error));
       })
       .catch((error) => console.error("Error:", error));
+
   },
   auth: async function (req, res, next) {
     const uid = req.query.uid;

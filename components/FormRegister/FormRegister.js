@@ -43,15 +43,14 @@ export default function FormRegister() {
     message: "",
   });
   const createUserChat = async (user) => {
-
-
     const res = await Post(`/chat`, {
-      user,
+      ...user,
     });
 
     return res;
   };
   const createUser = async () => {
+    console.log(JSON.stringify(register));
     const test = await fetch("http://localhost:3000/api/member/register", {
       method: "POST",
       headers: {
@@ -61,6 +60,7 @@ export default function FormRegister() {
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));
+    console.log(test, "ini test");
     await createUserChat(test.user);
     return test;
   };
@@ -70,7 +70,7 @@ export default function FormRegister() {
         if (register.password === register.confirmPassword) {
           setVisible(true);
           const res = await createUser();
-          console.log(res);
+
           if (res.status > 201) {
             setmodal({
               modal: true,
