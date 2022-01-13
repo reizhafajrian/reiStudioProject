@@ -155,6 +155,105 @@ const Modal = ({
     </CModal>
   );
 };
+const ModalUser = ({ visible, setVisible }) => {
+  return (
+    <CModal
+      visible={visible.show}
+      onClose={() =>
+        setVisible({
+          ...visible,
+          show: false,
+        })
+      }
+    >
+      <CModalHeader onClose={() => setVisible(false)}>
+        <CModalTitle>Create Oli</CModalTitle>
+      </CModalHeader>
+      <CModalBody>
+        <CForm>
+          <>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlInput1">Nama</CFormLabel>
+              <CFormInput
+                type="text"
+                id="name"
+                value={visible.name}
+                placeholder="name"
+                onChange={(e) =>
+                  setdata({
+                    ...data,
+                    name: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlInput1">Email</CFormLabel>
+              <CFormInput
+                type="text"
+                id="image"
+                value={visible.email}
+                placeholder="link image 1"
+                onChange={(e) =>
+                  setdata({
+                    ...data,
+                    no_resi: e.target.value,
+                  })
+                }
+              />
+            </div>{" "}
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlInput1">
+                Nomor Telfon
+              </CFormLabel>
+              <CFormInput
+                type="text"
+                id="image"
+                value={visible.phone}
+                placeholder="09"
+                onChange={(e) =>
+                  setdata({
+                    ...data,
+                    no_resi: e.target.value,
+                  })
+                }
+              />
+            </div>{" "}
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlInput1">Alamat</CFormLabel>
+              <CFormInput
+                type="text"
+                id="image"
+                value={visible.address}
+                placeholder="link image 1"
+                onChange={(e) =>
+                  setdata({
+                    ...data,
+                    no_resi: e.target.value,
+                  })
+                }
+              />
+            </div>
+          </>
+
+          <CModalFooter>
+            <CButton
+              color="secondary"
+              onClick={() =>
+                setVisible({
+                  ...visible,
+                  show: false,
+                })
+              }
+            >
+              Close
+            </CButton>
+          </CModalFooter>
+        </CForm>
+      </CModalBody>
+    </CModal>
+  );
+};
 
 const TableTrue = ({
   state,
@@ -164,9 +263,11 @@ const TableTrue = ({
   editFuntion,
   refresh,
   setRefresh,
+  detailUser,
 }) => {
   const data = useSelector((state) => state.transaksi);
 
+  console.log(data, "ysysy");
   const setResi = (item, string) => {
     Put("/admin/transaksi/", {
       data: {
@@ -211,6 +312,7 @@ const TableTrue = ({
             <CTableHeaderCell scope="col">price</CTableHeaderCell>
             <CTableHeaderCell scope="col">tag</CTableHeaderCell>
             <CTableHeaderCell scope="col">desc</CTableHeaderCell>
+            <CTableHeaderCell scope="col">detail user</CTableHeaderCell>
             <CTableHeaderCell scope="col">status</CTableHeaderCell>
             <CTableHeaderCell scope="col">resi</CTableHeaderCell>
 
@@ -234,6 +336,15 @@ const TableTrue = ({
                         <CTableDataCell>{item.data.price}</CTableDataCell>
                         <CTableDataCell>{item.data.tag}</CTableDataCell>
                         <CTableDataCell>{item.data.desc}</CTableDataCell>
+                        <CTableDataCell>
+                          {" "}
+                          <CButton
+                            color="primary"
+                            onClick={(e) => detailUser(e, item2)}
+                          >
+                            Detail User
+                          </CButton>
+                        </CTableDataCell>
                         <CTableDataCell>
                           <CDropdown>
                             <CDropdownToggle color="secondary">
@@ -297,6 +408,7 @@ const createoli = () => {
     setshowModal(true);
     e.preventDefault();
   };
+
   const create = (e, article) => {
     settype("create");
 
@@ -332,6 +444,23 @@ const createoli = () => {
   useEffect(() => {
     getData();
   }, [refresh]);
+  const [modalUser, setmodalUser] = useState({
+    show: false,
+    name: "",
+    email: "",
+    address: "",
+  });
+  const detailUser = (e, data) => {
+    e.preventDefault();
+    setmodalUser({
+      ...modalUser,
+      show: true,
+      name: data.name,
+      email: data.email,
+      address: data.address,
+      phone: data.phone,
+    });
+  };
   return (
     <>
       {/* <CButton color="primary" className={"mb-2"} onClick={create}>
@@ -346,6 +475,7 @@ const createoli = () => {
         editFuntion={edit}
         isRefresh={refresh}
         setRefresh={setrefresh}
+        detailUser={detailUser}
       />
 
       <Modal
@@ -356,6 +486,7 @@ const createoli = () => {
         dataEdit={data}
         setRefresh={setrefresh}
       />
+      <ModalUser visible={modalUser} setVisible={setmodalUser} />
     </>
   );
 };

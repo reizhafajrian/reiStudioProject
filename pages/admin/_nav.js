@@ -58,7 +58,12 @@ const _nav = [
     //   },
     // ],
   },
-
+  {
+    component: Link,
+    name: "Create Service",
+    href: "/admin/app/service",
+    icon: <MdInvertColors className={"nav-icon"} />,
+  },
   {
     component: Link,
     name: "Transaksi",
@@ -75,6 +80,12 @@ const _nav = [
     component: Link,
     name: "Chat",
     href: "/admin/app/chat",
+    icon: <MdInvertColors className={"nav-icon"} />,
+  },
+  {
+    component: Link,
+    name: "Add Mekanik",
+    href: "/admin/app/mekanik",
     icon: <MdInvertColors className={"nav-icon"} />,
   },
   // {

@@ -31,7 +31,6 @@ const Product = new mongoose.Schema({
   },
   promo: {
     type: Number,
-
   },
   tag: {
     type: String,
@@ -41,6 +40,11 @@ const Product = new mongoose.Schema({
     type: Array,
     required: false,
     default: [],
+  },
+  mekanik: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Mekanik",
+    required: false,
   },
   created_at: {
     type: Date,

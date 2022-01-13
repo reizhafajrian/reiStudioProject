@@ -4,6 +4,7 @@ const initialState = {
   sidebarShow: true,
   dataProduct: [],
   transaksi: [],
+  mekanik: [],
 };
 
 const changeState = (state = initialState, action) => {
@@ -14,6 +15,8 @@ const changeState = (state = initialState, action) => {
       return { ...state, dataProduct: action.product };
     case "SET_TRANSAKSI":
       return { ...state, transaksi: action.transaksi };
+    case "SET_MEKANIK":
+      return { ...state, mekanik: action.mekanik };
     default:
       return state;
   }

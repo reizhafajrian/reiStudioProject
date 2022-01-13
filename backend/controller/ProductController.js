@@ -4,18 +4,7 @@ import ProductSchema from "../models/product";
 const ProductController = {
   createProduct: async (req, res) => {
     const { data } = req.body;
-    const tets = {
-      name: "etet",
-      image_1: "etet",
-      image_2: "etet",
-      image_3: "etet",
-      desc: "test",
-      price: 2,
-      promo: 20,
-      stock: 1,
-      review: [],
-      tag: "oli",
-    };
+
     const product = await ProductSchema.create(data);
     return res.status(200).json({
       status: 200,
@@ -39,6 +28,7 @@ const ProductController = {
   },
   editData: async (req, res) => {
     const { data } = req.body;
+    console.log(data)
     const product = await ProductSchema.findByIdAndUpdate(data.id, data);
     return res.status(200).json({
       status: 200,
