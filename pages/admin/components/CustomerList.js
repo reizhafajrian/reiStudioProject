@@ -22,12 +22,15 @@ function CustomerList({
             className={`list-group-item ${
               customer.uid === selectedCustomer ? "active" : ""
             }`}
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
+         
+
               selectedCustomer({
                 ...state,
                 selectedCustomer: customer.uid,
               });
-              console.log(state);
+     
             }}
           >
             {customer.name}

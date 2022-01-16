@@ -17,7 +17,7 @@ class ChatBox extends React.Component {
             <div key={chat.id} className="message">
               <div
                 className={`${
-                  chat.receiver === "1641354719504" ? "balon2" : "balon1"
+                  chat.receiverId === "1641354719504" ? "balon2" : "balon1"
                 } p-3 m-1`}
               >
                 {chat.text}

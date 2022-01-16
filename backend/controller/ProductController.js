@@ -28,7 +28,7 @@ const ProductController = {
   },
   editData: async (req, res) => {
     const { data } = req.body;
-    console.log(data)
+    console.log(data);
     const product = await ProductSchema.findByIdAndUpdate(data.id, data);
     return res.status(200).json({
       status: 200,
@@ -47,6 +47,17 @@ const ProductController = {
     const { id } = req.query;
 
     const product = await ProductSchema.findById(id);
+    return res.status(200).json({
+      status: 200,
+      data: product,
+    });
+  },
+  findProduct: async (req, res) => {
+    const { id } = req.query;
+
+    const product = await ProductSchema.find({
+      $text: { $search: id },
+    });
     return res.status(200).json({
       status: 200,
       data: product,

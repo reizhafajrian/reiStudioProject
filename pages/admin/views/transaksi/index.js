@@ -267,7 +267,7 @@ const TableTrue = ({
 }) => {
   const data = useSelector((state) => state.transaksi);
 
-  console.log(data, "ysysy");
+
   const setResi = (item, string) => {
     Put("/admin/transaksi/", {
       data: {
@@ -417,6 +417,7 @@ const createoli = () => {
   const getData = async () => {
     try {
       const postData = await Get("/admin/transaksi");
+      console.log(postData,'Ini ahskajsksj')
 
       dispatch({
         type: "SET_TRANSAKSI",

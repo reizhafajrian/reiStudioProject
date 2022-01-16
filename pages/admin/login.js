@@ -20,19 +20,18 @@ const Login = () => {
     email: "",
     password: "",
   });
+
   const postLogin = async () => {
     const cookies = new Cookies();
     Post("/admin/login", data).then((res) => {
       if (res.isLogin) {
-        cookies.set("user-admin", res.data, { path: "/" });
+        console.log(res, "ajsajsjsa");
+        cookies.set("user-admin", res.user, { path: "/" });
         cookies.set("token-admin", res.token, { path: "/" });
 
         window.location.href = "/admin";
       } else {
-        setmodal({
-          modal: true,
-          message: res.data.message,
-        });
+        alert("Email atau Password Salah");
       }
     });
   };
@@ -41,7 +40,7 @@ const Login = () => {
     const user = cookies.get("user-admin");
 
     if (user !== "undefined") {
-       window.location.href = "/admin/";
+      window.location.href = "/admin/";
     }
   };
   useEffect(() => {

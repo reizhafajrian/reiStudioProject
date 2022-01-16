@@ -22,9 +22,7 @@ export default function Chat() {
   const createUser = async () => {
     const cookies = new Cookies();
     const user = cookies.get("user");
-
     const res = await Put(`/chat?uid=${user._id}`);
-
     return res;
   };
   const fetchPreviousMessages = () => {

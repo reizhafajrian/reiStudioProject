@@ -59,6 +59,7 @@ const BillCard = ({ item }) => {
       user,
       reason: Reason,
     });
+    setModal(false);
   };
   return (
     <>
@@ -121,25 +122,29 @@ const BillCard = ({ item }) => {
                               flexDirection: "column",
                             }}
                           >
-                            <h5>Review Produk</h5>
-                            <ReactStars
-                              count={5}
-                              onChange={setstar}
-                              size={24}
-                              activeColor="#ffd700"
-                            />
-                            <div class="form-floating">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingComment"
-                                onChange={(e) => setComment(e.target.value)}
-                              ></input>
-                              <label for="floatingPassword">Comment</label>
-                            </div>
-                            <CButton className="my-4" onClick={postComment}>
-                              Save
-                            </CButton>
+                            {typeof item.garansi === "undefined" && (
+                              <>
+                                <h5>Review Produk</h5>
+                                <ReactStars
+                                  count={5}
+                                  onChange={setstar}
+                                  size={24}
+                                  activeColor="#ffd700"
+                                />
+                                <div class="form-floating">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="floatingComment"
+                                    onChange={(e) => setComment(e.target.value)}
+                                  ></input>
+                                  <label for="floatingPassword">Comment</label>
+                                </div>
+                                <CButton className="my-4" onClick={postComment}>
+                                  Save
+                                </CButton>
+                              </>
+                            )}
                             {typeof item.garansi !== "undefined" &&
                             typeof item.garansi.approve !== "undefined" ? (
                               item.garansi.approve ? (
@@ -153,8 +158,14 @@ const BillCard = ({ item }) => {
                                 </CButton>
                               )
                             ) : (
-                              <CButton className="my-4" disabled >
-                                Permintaan Garansi di proses
+                              <CButton
+                                className="my-4"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  modalShow();
+                                }}
+                              >
+                                Ajukan Permintaan Garansi
                               </CButton>
                             )}
                           </div>

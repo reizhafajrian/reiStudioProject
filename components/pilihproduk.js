@@ -26,6 +26,7 @@ import Cookies from "universal-cookie";
 import { Get, Post } from "../utils/api";
 
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import "react-chat-widget/lib/styles.css";
 const Test = () => {
   return <Widget />;
@@ -34,16 +35,16 @@ const Test = () => {
 const WidgetComponent = dynamic(() => import("../components/Chat.js"), {
   ssr: false,
 });
-const { Widget } = WidgetComponent;
 
+const WidgetCom = React.memo(WidgetComponent);
 export default function PilihProduk({ item }) {
   const [count, setcount] = useState(0);
-
+  const router = useRouter();
   const opneSnap = async () => {
     const cookies = new Cookies();
     const user = cookies.get("user");
     const token = cookies.get("token");
-    console.log(user,"user")
+
     if (typeof user !== "undefined") {
       const post = await fetch("http://localhost:3000/api/member/pay", {
         headers: {
@@ -52,14 +53,17 @@ export default function PilihProduk({ item }) {
         },
         method: "POST",
         body: JSON.stringify({
-          price: count * item.price,
+          price:
+            item.promo > 0
+              ? count * (item.price * ((100 - item.promo) / 100))
+              : count * item.price,
           email: user.email,
           first_name: user.name,
           last_name: user.name,
           phone: user.phone,
         }),
       }).then((res) => res.json());
-
+      console.log(item.promo);
       window.snap.pay(post.transaction.token, {
         onSuccess: async (result) => {},
         onPending: async (result) => {
@@ -71,11 +75,14 @@ export default function PilihProduk({ item }) {
                   data: {
                     ...item,
                     total: count,
-                    total_price: count * item.price,
+                    total_price:
+                      item.promo > 0
+                        ? count * (item.price * ((100 - item.promo) / 100))
+                        : count * item.price,
                   },
                 },
               }).then((res) => {
-                console.log(res,"res");
+                console.log(res, "res");
                 if (res.status === false) {
                   alert("Stock is not enough");
                 } else {
@@ -90,6 +97,8 @@ export default function PilihProduk({ item }) {
           // return settemp(temp.concat(result));
         },
       });
+    } else {
+      router.push("/member/login");
     }
   };
   return (
@@ -176,7 +185,14 @@ export default function PilihProduk({ item }) {
                 </CButton>
               </CInputGroup>
             </div>
-            <p className="mt-3"> Rp. {formatter(item.price)}</p>
+            {item.promo > 0 && (
+              <>
+                <s className="mt-3"> Rp. {formatter(item.price)}</s>
+                <p className="mt-3">
+                  Rp. {formatter(item.price * ((100 - item.promo) / 100))}
+                </p>
+              </>
+            )}
 
             <CCol>
               <CRow className="mb-3">
@@ -257,7 +273,7 @@ export default function PilihProduk({ item }) {
         </h4> */}
       </CContainer>
       <div>
-        <WidgetComponent />
+        <WidgetCom />
       </div>
     </>
   );

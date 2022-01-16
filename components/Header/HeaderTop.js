@@ -20,9 +20,11 @@ import {
 import { theme } from "../../constant/theme.js";
 import { IC_CART, IC_SEARCH, IC_USER } from "../../assets";
 import Cookies from "universal-cookie";
+import { useRouter } from "next/router";
 
 export default function HeaderTop() {
   const cookies = new Cookies();
+  const router = useRouter();
   const [user, setuser] = useState({
     privacy_policy: false,
     _id: "",
@@ -32,14 +34,15 @@ export default function HeaderTop() {
     role: 0,
     created_at: "",
   });
+  const [data, setdata] = useState("");
   const getUser = () => {
     const user = cookies.get("user");
     if (typeof user !== "undefined") return setuser(user);
   };
   const logout = () => {
-    cookies.remove("token");
-    cookies.remove("user");
-    window.location.reload();
+    cookies.remove("token", { path: "/" });
+    cookies.remove("user", { path: "/" });
+    router.push("/member/login");
   };
   useEffect(() => {
     getUser();
@@ -67,7 +70,13 @@ export default function HeaderTop() {
             <IC_SEARCH />
           </CButton>
           <CNavItem>
-            <CForm className="d-flex">
+            <CForm
+              className="d-flex"
+              onSubmit={(e) => {
+                e.preventDefault();
+                router.push("http://localhost:3000/member/search?id=" + data);
+              }}
+            >
               <CFormInput
                 type="search"
                 placeholder="Cari ban, oli, atau kebutuhan motor anda"
@@ -77,6 +86,10 @@ export default function HeaderTop() {
                   borderRadius: "0px 10px 10px 0",
                   borderWidth: 0,
                   fontSize: "14px",
+                }}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setdata(e.target.value);
                 }}
               />
             </CForm>

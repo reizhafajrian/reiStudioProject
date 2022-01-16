@@ -36,8 +36,6 @@ export default function index() {
       (authToken) => {
         console.log("auth token fetched", authToken);
         CometChat.login(authToken).then((user) => {
-          // after login, fetch all users
-          // put them into customer state
           fetchUsers().then((result) => {
             console.log(result);
             console.log("users fetched", result);
@@ -52,11 +50,6 @@ export default function index() {
             "agent-listener",
             new CometChat.MessageListener({
               onTextMessageReceived: (message) => {
-                // addResponseMessage(message.text);
-                // check incoming message
-                // if from the same customer agent is currently chatting
-                // push a new chat item into chat state
-
                 if (state.selectedCustomer === message.sender.uid) {
                   const temp = state.chat;
                   temp.push(message);
@@ -90,6 +83,42 @@ export default function index() {
         console.log("Initialization failed with error:", error);
       }
     );
+  }, []);
+  const fetchPreviousMessages = (id) => {
+    // const cookies = new Cookies();
+    // const user = cookies.get("user");
+    setstate({
+      ...state,
+      chat: [],
+    });
+    var messagesRequest = new CometChat.MessagesRequestBuilder()
+      .setUID(state.selectedCustomer)
+      .setLimit(10)
+      .build();
+    messagesRequest.fetchPrevious().then(
+      (messages) => {
+        // add messages to the widget chat bubbles
+        // messages.forEach((message) => {
+        //   const temp = state.chat;
+        //   temp.push(message);
+        //   setstate({
+        //     ...state,
+        //     chat: temp,
+        //   });
+        //   console.log(temp, "ini chat temp");
+        // });
+        setstate({
+          ...state,
+          chat: messages,
+        });
+      },
+      (error) => {
+        console.log("Message fetching failed with error:", error);
+      }
+    );
+  };
+  useEffect(() => {
+    fetchPreviousMessages();
   }, [state.selectedCustomer]);
   const message = useRef();
   const handleSubmit = (event) => {
@@ -125,6 +154,7 @@ export default function index() {
 
     return response;
   };
+
   return (
     <div className="container-fluid">
       <div className="row">

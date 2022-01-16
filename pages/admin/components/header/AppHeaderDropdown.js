@@ -20,6 +20,7 @@ const AppHeaderDropdown = () => {
     const cookies = new Cookies();
     cookies.remove("user-admin");
     cookies.remove("token-admin");
+    // console.log(cookies.get("user-admin"));
     window.location.href = "/admin/login";
   };
   return (

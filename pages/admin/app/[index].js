@@ -11,7 +11,8 @@ const index = () => {
   const checkLogin = () => {
     const cookies = new Cookies();
     const user = cookies.get("user-admin");
-    if (user === "undefined") {
+
+    if ( user === "undefined") {
       window.location.href = "/admin/login";
     }
   };
