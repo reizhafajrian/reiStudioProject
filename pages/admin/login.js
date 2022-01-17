@@ -15,11 +15,13 @@ import {
 } from "@coreui/react";
 import { Post } from "../../utils/api";
 import Cookies from "universal-cookie";
+import { useRouter } from "next/router";
 const Login = () => {
   const [data, setdata] = useState({
     email: "",
     password: "",
   });
+  const router = useRouter();
 
   const postLogin = async () => {
     const cookies = new Cookies();
@@ -29,7 +31,7 @@ const Login = () => {
         cookies.set("user-admin", res.user, { path: "/" });
         cookies.set("token-admin", res.token, { path: "/" });
 
-        window.location.href = "/admin";
+        router.push("/admin");
       } else {
         alert("Email atau Password Salah");
       }
@@ -39,8 +41,8 @@ const Login = () => {
     const cookies = new Cookies();
     const user = cookies.get("user-admin");
 
-    if (user !== "undefined") {
-      window.location.href = "/admin/";
+    if (typeof user !== "undefined") {
+      router.push("/admin");
     }
   };
   useEffect(() => {

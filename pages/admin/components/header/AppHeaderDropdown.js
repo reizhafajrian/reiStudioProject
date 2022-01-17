@@ -14,14 +14,16 @@ import {
 
 import avatar8 from "./../../assets/images/avatars/8.jpg";
 import Cookies from "universal-cookie";
+import { useRouter } from "next/router";
 
 const AppHeaderDropdown = () => {
+  const router = useRouter();
   const logout = () => {
     const cookies = new Cookies();
-    cookies.remove("user-admin");
-    cookies.remove("token-admin");
-    // console.log(cookies.get("user-admin"));
-    window.location.href = "/admin/login";
+    cookies.remove("user-admin", { path: "/" });
+    cookies.remove("token-admin", { path: "/" });
+
+    router.push("/admin/login");
   };
   return (
     <CDropdown variant="nav-item">

@@ -200,10 +200,9 @@ const TableTrue = ({
         Post("/admin/reject", {
           ...item,
           order,
+        }).then((res) => {
+          console.log(res, "ini res");
         });
-        break;
-
-      default:
         break;
     }
   };
@@ -310,7 +309,8 @@ const TableTrue = ({
                             className="mx-2 "
                             disabled={
                               typeof item.garansi.approve !== "undefined" &&
-                              item.garansi.approve
+                              item.garansi.approve ||
+                              item.garansi.approve === false
                             }
                             onClick={(e) =>
                               garansiFunc(e, item2, item, "approve")
@@ -323,7 +323,8 @@ const TableTrue = ({
                             className="mx-2 bg-danger"
                             disabled={
                               typeof item.garansi.approve !== "undefined" &&
-                              item.garansi.approve
+                              item.garansi.approve ||
+                              item.garansi.approve === false
                             }
                             onClick={(e) =>
                               garansiFunc(e, item2, item, "reject")
