@@ -23,6 +23,11 @@ module.exports = {
         permanent: false,
       },
       {
+        source: "/mekanik",
+        destination: "/mekanik/app/jobs",
+        permanent: false,
+      },
+      {
         source: "/",
         destination: "/member/",
         permanent: false,

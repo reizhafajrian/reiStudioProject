@@ -39,7 +39,6 @@ const Modal = ({
     address: "",
     phone: "",
     email: "",
-    password: "",
   });
 
   useEffect(() => {
@@ -50,7 +49,6 @@ const Modal = ({
         email: dataEdit.email,
         address: dataEdit.address,
         phone: dataEdit.phone,
-        password: dataEdit.password,
       });
     }
   }, [type]);
@@ -132,23 +130,6 @@ const Modal = ({
                   setdata({
                     ...data,
                     email: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="exampleFormControlInput1">
-                Password
-              </CFormLabel>
-              <CFormInput
-                type="password"
-                id="image"
-                value={data.password}
-                placeholder="mrjandoe@gmail.com"
-                onChange={(e) =>
-                  setdata({
-                    ...data,
-                    password: e.target.value,
                   })
                 }
               />
