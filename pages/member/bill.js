@@ -17,6 +17,7 @@ import {
   CModalTitle,
 } from "@coreui/react";
 import Cookies from "universal-cookie";
+import findmekanik from "../api/member/findmekanik";
 const BillCard = ({ item }) => {
   const [star, setstar] = useState(0);
   const [comment, setComment] = useState("");
@@ -61,6 +62,16 @@ const BillCard = ({ item }) => {
     });
     setModal(false);
   };
+  const [mekanik, setmekanik] = useState("");
+  const findMekanik = async (id) => {
+    const temp = await Get(`/member/findmekanik?id=${id}`);
+    setmekanik(temp.data.name);
+  };
+  useEffect(() => {
+    if (typeof item.data.mekanik !== "undefined") {
+      findMekanik(item.data.mekanik);
+    }
+  }, []);
   return (
     <>
       <div className="container my-4">
@@ -74,11 +85,20 @@ const BillCard = ({ item }) => {
                 <div className="row mb-4">
                   <div className="col-aute">
                     <div className="d-flex flex-row justify-content-between">
-                      <strong>Nama Barang</strong>
+                      <strong>
+                        {item.data.tag === "service"
+                          ? "Nama Service"
+                          : "Nama Barang"}
+                      </strong>
                       <div>{item.data.name}</div>
                     </div>
                     <div className="d-flex flex-row justify-content-between">
-                      <strong>Harga Barang</strong>
+                      <strong>
+                        {" "}
+                        {item.data.tag === "service"
+                          ? "Harga Service"
+                          : "Harga Barang"}
+                      </strong>
                       <div>Rp. {formatter(item.data.price)}</div>
                     </div>
                     <div className="d-flex flex-row justify-content-between">
@@ -112,6 +132,15 @@ const BillCard = ({ item }) => {
                         </div>
                       </>
                     )}
+                    {typeof item.data.mekanik !== "undefined" && (
+                      <>
+                        <div className="d-flex flex-row justify-content-between">
+                          <strong>Nama Mekanik</strong>
+                          <div>{mekanik}</div>
+                        </div>
+                      </>
+                    )}
+
                     {item.status === "selesai" &&
                       (typeof item.review === "undefined" ? (
                         <div className="d-flex flex-row justify-content-between my-4">
@@ -164,8 +193,15 @@ const BillCard = ({ item }) => {
                                   e.preventDefault();
                                   modalShow();
                                 }}
+                                disabled={
+                                  new Date(item.created_date).getTime() >=
+                                  new Date(item.end_date).getTime()
+                                }
                               >
-                                Ajukan Permintaan Garansi
+                                {new Date(item.created_date).getTime() >=
+                                new Date(item.end_date).getTime()
+                                  ? "Waktu Pengajuan garansi telah habis"
+                                  : "Ajukan Permintaan Garansi"}
                               </CButton>
                             )}
                           </div>

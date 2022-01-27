@@ -267,12 +267,15 @@ const TableTrue = ({
 }) => {
   const data = useSelector((state) => state.transaksi);
 
-
   const setResi = (item, string) => {
+    const dateNow = new Date();
+    const date_7 = new Date(new Date().setDate(new Date().getDate() + 7))
     Put("/admin/transaksi/", {
       data: {
         ...item,
         status: string,
+        created_date: dateNow,
+        end_date: date_7,
       },
     });
     window.location.reload();
@@ -312,7 +315,10 @@ const TableTrue = ({
             <CTableHeaderCell scope="col">price</CTableHeaderCell>
             <CTableHeaderCell scope="col">tag</CTableHeaderCell>
             <CTableHeaderCell scope="col">desc</CTableHeaderCell>
+            <CTableHeaderCell scope="col">date order</CTableHeaderCell>
+            <CTableHeaderCell scope="col">date garansi</CTableHeaderCell>
             <CTableHeaderCell scope="col">detail user</CTableHeaderCell>
+
             <CTableHeaderCell scope="col">status</CTableHeaderCell>
             <CTableHeaderCell scope="col">resi</CTableHeaderCell>
 
@@ -336,6 +342,14 @@ const TableTrue = ({
                         <CTableDataCell>{item.data.price}</CTableDataCell>
                         <CTableDataCell>{item.data.tag}</CTableDataCell>
                         <CTableDataCell>{item.data.desc}</CTableDataCell>
+                        <CTableDataCell>
+                          {new Date(item.data.created_at).toUTCString()}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          {new Date(item.created_date).toUTCString() +
+                            "-" +
+                            new Date(item.end_date).toUTCString()}
+                        </CTableDataCell>
                         <CTableDataCell>
                           {" "}
                           <CButton
@@ -417,7 +431,7 @@ const createoli = () => {
   const getData = async () => {
     try {
       const postData = await Get("/admin/transaksi");
-      console.log(postData,'Ini ahskajsksj')
+      console.log(postData, "Ini ahskajsksj");
 
       dispatch({
         type: "SET_TRANSAKSI",

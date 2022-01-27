@@ -148,7 +148,7 @@ export default function PilihProduk({ item }) {
           </CCol>
           <CCol style={{ marginTop: "30px", paddingLeft: "0px" }}>
             <p style={{ fontWeight: "bold" }}>{item.name}</p>
-            <p> 4.9 (3 ulasan) </p>
+            <p>jumlah stok :{item.stock}</p>
             <p> Jumlah </p>
             <div
               style={{
@@ -159,7 +159,7 @@ export default function PilihProduk({ item }) {
               <CInputGroup className="mb-3">
                 <CButton
                   onClick={(e) => {
-                    if (count > 0) {
+                    if (count > 0 ) {
                       setcount(count - 1);
                       e.preventDefault();
                     }
@@ -177,8 +177,10 @@ export default function PilihProduk({ item }) {
                 <CButton
                   color="success"
                   onClick={(e) => {
-                    setcount(count + 1);
-                    e.preventDefault();
+                    if (count < item.stock) {
+                      setcount(count + 1);
+                      e.preventDefault();
+                    }
                   }}
                 >
                   +
