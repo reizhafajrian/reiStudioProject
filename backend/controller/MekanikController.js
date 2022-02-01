@@ -1,6 +1,7 @@
 import { comparePassword, encrypt } from "../middleware/encrypt";
 import MekanikSchema from "../models/mekanik";
 import { generateToken, verifyToken } from "../middleware/jwt";
+import ProductSchema from "../models/product";
 const MekanikController = {
   create: async (req, res) => {
     try {
@@ -89,6 +90,39 @@ const MekanikController = {
       });
     } catch (error) {
       throw error;
+    }
+  },
+  findService: async (req, res) => {
+    try {
+      const data = await ProductSchema.find({ tag: "service" });
+      return res.status(200).json({
+        status: 200,
+        data: data,
+      });
+    } catch (error) {
+      return res.json({
+        status: 401,
+        message: error.message,
+      });
+    }
+  },
+  addService: async (req, res) => {
+    const { mekanik, id } = req.body;
+    console.log(req.body);
+    const data = await ProductSchema.findOne({ _id: id });
+    const check = data.mekanik.find((item) => item === mekanik);
+    if (typeof check === "undefined") {
+      data.mekanik.push(mekanik);
+      data.save();
+      return res.status(200).json({
+        status: 200,
+        data: data,
+      });
+    } else {
+      return res.status(400).json({
+        status: 400,
+        message: "error",
+      });
     }
   },
 };

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { array } from "prop-types";
 
 const Product = new mongoose.Schema({
   name: {
@@ -31,6 +32,11 @@ const Product = new mongoose.Schema({
   },
   promo: {
     type: Number,
+  },
+  mekanik: {
+    type: Array,
+    required:false,
+    default:[]
   },
   tag: {
     type: String,

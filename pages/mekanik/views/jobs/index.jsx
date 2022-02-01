@@ -4,6 +4,7 @@ import {
   CFormInput,
   CFormLabel,
   CFormSelect,
+  CFormSwitch,
   CFormTextarea,
   CModal,
   CModalBody,
@@ -25,6 +26,8 @@ import {
 import { GetStaticProps } from "next";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from "universal-cookie";
+import { Post } from "../../../../utils/api";
 
 const Modal = ({
   visible,
@@ -280,6 +283,18 @@ const Modal = ({
 
 const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
   const data = useSelector((state) => state.dataProduct);
+  const [bool, setbool] = useState(false);
+
+  const postJob = async (item) => {
+    const cookies = new Cookies();
+    const user = cookies.get("user-mekanik");
+    if (bool == false) {
+      await Post("/mekanik/addservice", {
+        mekanik: user._id,
+        id: item._id,
+      });
+    }
+  };
 
   return (
     <CTable color="dark" striped>
@@ -311,18 +326,15 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
                   <CTableDataCell>{item.tag}</CTableDataCell>
                   <CTableDataCell>{item.desc}</CTableDataCell>
                   <CTableDataCell className={"text-center"}>
-                    <CButton
-                      color="primary"
-                      onClick={(e) => editFuntion(e, item)}
-                    >
-                      Edit
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      onClick={(e) => deleteFunction(e, item)}
-                    >
-                      Delete
-                    </CButton>
+                    <CFormSwitch
+                      value={bool}
+                      defaultChecked={bool}
+                      onChange={(e) => {
+                        postJob(item);
+                      }}
+                      // onChange={this.handleChange}
+                      // checked={this.state.checked}
+                    />
                   </CTableDataCell>
                 </CTableRow>
               </>
@@ -355,7 +367,7 @@ const createoli = () => {
   };
   const getData = async () => {
     try {
-      const postData = await fetch("http://localhost:3000/api/admin/product");
+      const postData = await fetch("http://localhost:3000/api/mekanik/product");
 
       const res = await postData.json();
       dispatch({
