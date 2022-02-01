@@ -108,20 +108,24 @@ const MekanikController = {
   },
   addService: async (req, res) => {
     const { mekanik, id } = req.body;
-    console.log(req.body);
     const data = await ProductSchema.findOne({ _id: id });
-    const check = data.mekanik.find((item) => item === mekanik);
+    const check = data.list_mekanik.find((item) => item === mekanik);
     if (typeof check === "undefined") {
-      data.mekanik.push(mekanik);
-      data.save();
+      data.list_mekanik.push(mekanik);
+      await data.save();
       return res.status(200).json({
         status: 200,
         data: data,
       });
     } else {
-      return res.status(400).json({
-        status: 400,
-        message: "error",
+      const response = data.list_mekanik.indexOf(mekanik);
+      if (response > -1) {
+        data.list_mekanik.splice(response, 1);
+        await data.save();
+      }
+      return res.status(200).json({
+        status: 201,
+        data: data,
       });
     }
   },

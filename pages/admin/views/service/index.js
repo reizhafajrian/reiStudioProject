@@ -43,16 +43,33 @@ const Modal = ({
     price: "",
     promo: "",
     stock: "",
-    mekanik: "",
+    // mekanik: "",
+    product: [
+      {
+        name: "",
+        id: "",
+      },
+    ],
     tag: "service",
   });
+  const [dataProduct, setdataProduct] = useState([]);
+  const getData = () => {
+    fetch("http://localhost:3000/api/admin/product?ex=service")
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        // setdata(res.data);
+        setdataProduct(res.data);
+      });
+  };
 
   useEffect(() => {
+    getData();
     if (type === "edit") {
       setdata({
         id: dataEdit._id,
         name: dataEdit.name,
-        mekanik: dataEdit.mekanik,
+        // mekanik: dataEdit.mekanik,
         image_1: dataEdit.image_1,
         image_2: dataEdit.image_2,
         image_3: dataEdit.image_3,
@@ -117,13 +134,21 @@ const Modal = ({
     fetch("http://localhost:3000/api/admin/mekanik")
       .then((res) => res.json())
       .then((res) => {
-        console.log(res, "ini ehsajshj");
         setdatamekanik(res.data);
       });
   };
   useEffect(() => {
     getMekanik();
   }, []);
+  const addProduct = () => {
+    setdata({
+      ...data,
+      product: data.product.concat({
+        name: "",
+        id: "",
+      }),
+    });
+  };
 
   return (
     <CModal visible={visible} onClose={() => setVisible(false)}>
@@ -200,10 +225,58 @@ const Modal = ({
               />
             </div>
             <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlInput1">
+                Add Product
+              </CFormLabel>
+              {data.product.map((item, index) => {
+                return (
+                  <CFormSelect
+                    className="mb-3"
+                    aria-label="Default select example"
+                    onChange={(e) => {
+                      const temp = data.product;
+                      temp[index] = JSON.parse(e.target.value);
+                      setdata({
+                        ...data,
+                        product: temp,
+                      });
+                      console.log(data.product);
+                    }}
+                  >
+                    <option value="" selected disabled hidden>
+                      Choose here
+                    </option>
+                    {dataProduct.map((item) => {
+                      return (
+                        <>
+                          <option
+                            value={JSON.stringify({
+                              id: item._id,
+                              name: item.name,
+                              price: item.price,
+                            })}
+                          >
+                            {item.name}
+                          </option>
+                        </>
+                      );
+                    })}
+                  </CFormSelect>
+                );
+              })}
+
+              <CButton color="secondary" onClick={() => addProduct()}>
+                Add
+              </CButton>
+            </div>
+            <div className="mb-3">
               <CFormLabel htmlFor="exampleFormControlInput1">Harga</CFormLabel>
               <CFormInput
                 type="text"
-                value={data.price}
+                value={
+                  data.price +
+                  data.product.reduce((a, b) => a + (b.price || 0), 0)
+                }
                 id="tag"
                 placeholder="Harga Product"
                 onChange={(e) =>
@@ -229,7 +302,7 @@ const Modal = ({
                 }
               />
             </div>
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <CFormLabel htmlFor="exampleFormControlInput1">
                 Pilih Mekanik
               </CFormLabel>
@@ -253,7 +326,7 @@ const Modal = ({
                   );
                 })}
               </CFormSelect>
-            </div>
+            </div> */}
             <div className="mb-3">
               <CFormLabel htmlFor="exampleFormControlInput1">Promo</CFormLabel>
               <CFormInput
@@ -315,6 +388,7 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
           <CTableHeaderCell scope="col">price</CTableHeaderCell>
           <CTableHeaderCell scope="col">tag</CTableHeaderCell>
           <CTableHeaderCell scope="col">desc</CTableHeaderCell>
+          {/* <CTableHeaderCell scope="col">list-mekanik</CTableHeaderCell> */}
           <CTableHeaderCell scope="col" className={"text-center"}>
             Aksi
           </CTableHeaderCell>
@@ -333,6 +407,9 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
                   <CTableDataCell>{item.price}</CTableDataCell>
                   <CTableDataCell>{item.tag}</CTableDataCell>
                   <CTableDataCell>{item.desc}</CTableDataCell>
+                  {/* <CTableDataCell>{item.list_mekanik.map((item,index)=>{
+                    return ()
+                  })}</CTableDataCell> */}
                   <CTableDataCell className={"text-center"}>
                     <CButton
                       color="primary"

@@ -159,7 +159,7 @@ export default function PilihProduk({ item }) {
               <CInputGroup className="mb-3">
                 <CButton
                   onClick={(e) => {
-                    if (count > 0 ) {
+                    if (count > 0) {
                       setcount(count - 1);
                       e.preventDefault();
                     }
@@ -198,7 +198,7 @@ export default function PilihProduk({ item }) {
 
             <CCol>
               <CRow className="mb-3">
-                <CCol>
+                <CCol className="d-flex flex-row">
                   <CButton
                     style={{
                       width: "150px",
@@ -211,6 +211,19 @@ export default function PilihProduk({ item }) {
                     // href="/member/pengiriman"
                   >
                     Beli Sekarang
+                  </CButton>
+                  <CButton className="mx-3"
+                    style={{
+                      width: "150px",
+                      fontSize: "14px",
+                      backgroundColor: "#1BA0E2",
+                      border: "none",
+                      borderRadius: "0px",
+                    }}
+                    onClick={opneSnap}
+                    // href="/member/pengiriman"
+                  >
+                    Add To Cart
                   </CButton>
                 </CCol>
                 <CCol>

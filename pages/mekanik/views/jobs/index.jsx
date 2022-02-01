@@ -284,16 +284,24 @@ const Modal = ({
 const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
   const data = useSelector((state) => state.dataProduct);
   const [bool, setbool] = useState(false);
-
+  const cookies = new Cookies();
+  const user = cookies.get("user-mekanik");
   const postJob = async (item) => {
-    const cookies = new Cookies();
-    const user = cookies.get("user-mekanik");
-    if (bool == false) {
-      await Post("/mekanik/addservice", {
-        mekanik: user._id,
-        id: item._id,
-      });
+    await Post("/mekanik/addservice", {
+      mekanik: user._id,
+      id: item._id,
+    }).then(() => {
+      // window.location.reload();
+    });
+  };
+  const getDetail = (item) => {
+    const check = item.list_mekanik.find(
+      (item) => String(item) === String(user._id)
+    );
+    if (typeof check !== "undefined") {
+      return true;
     }
+    return false;
   };
 
   return (
@@ -328,7 +336,7 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
                   <CTableDataCell className={"text-center"}>
                     <CFormSwitch
                       value={bool}
-                      defaultChecked={bool}
+                      defaultChecked={getDetail(item)}
                       onChange={(e) => {
                         postJob(item);
                       }}
