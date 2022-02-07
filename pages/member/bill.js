@@ -135,14 +135,15 @@ const BillCard = ({ item }) => {
                         </div>
                       </>
                     )}
-                    {typeof item.data.list_mekanik !== "undefined" && (
-                      <>
-                        <div className="d-flex flex-row justify-content-between">
-                          <strong>Nama Mekanik</strong>
-                          <div>{mekanik}</div>
-                        </div>
-                      </>
-                    )}
+                    {typeof item.data.list_mekanik !== "undefined" &&
+                      item.data.tag === "service" && (
+                        <>
+                          <div className="d-flex flex-row justify-content-between">
+                            <strong>Nama Mekanik</strong>
+                            <div>{mekanik}</div>
+                          </div>
+                        </>
+                      )}
 
                     {item.status === "selesai" &&
                       (typeof item.review === "undefined" ? (
@@ -177,6 +178,7 @@ const BillCard = ({ item }) => {
                                 </CButton>
                               </>
                             )}
+
                             {typeof item.garansi !== "undefined" &&
                             typeof item.garansi.approve !== "undefined" ? (
                               item.garansi.approve ? (
@@ -190,22 +192,33 @@ const BillCard = ({ item }) => {
                                 </CButton>
                               )
                             ) : (
-                              <CButton
-                                className="my-4"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  modalShow();
-                                }}
-                                disabled={
-                                  new Date(item.created_date).getTime() >=
+                              <>
+                                <CButton
+                                  className="mt-4 mb-2"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    modalShow();
+                                  }}
+                                  disabled={
+                                    new Date(item.created_date).getTime() >=
+                                    new Date(item.end_date).getTime()
+                                  }
+                                >
+                                  {new Date(item.created_date).getTime() >=
                                   new Date(item.end_date).getTime()
+                                    ? "Waktu Pengajuan garansi telah habis"
+                                    : "Ajukan Permintaan Garansi"}
+                                </CButton>
+                                {
+                                  <h4>
+                                    batas pengajuan garansi adalaah satu minggu
+                                    mulai dari tanggal{" "}
+                                    {new Date(item.created_date).toUTCString() +
+                                      "-" +
+                                      new Date(item.end_date).toUTCString()}
+                                  </h4>
                                 }
-                              >
-                                {new Date(item.created_date).getTime() >=
-                                new Date(item.end_date).getTime()
-                                  ? "Waktu Pengajuan garansi telah habis"
-                                  : "Ajukan Permintaan Garansi"}
-                              </CButton>
+                              </>
                             )}
                           </div>
                         </div>
