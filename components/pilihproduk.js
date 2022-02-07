@@ -44,61 +44,79 @@ export default function PilihProduk({ item }) {
     const cookies = new Cookies();
     const user = cookies.get("user");
     const token = cookies.get("token");
+    if (count > 0) {
+      if (typeof user !== "undefined") {
+        const post = await fetch("http://localhost:3000/api/member/pay", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          method: "POST",
+          body: JSON.stringify({
+            price:
+              item.promo > 0
+                ? count * (item.price * ((100 - item.promo) / 100))
+                : count * item.price,
+            email: user.email,
+            first_name: user.name,
+            last_name: user.name,
+            phone: user.phone,
+          }),
+        }).then((res) => res.json());
 
-    if (typeof user !== "undefined") {
-      const post = await fetch("http://localhost:3000/api/member/pay", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        method: "POST",
-        body: JSON.stringify({
-          price:
+        window.snap.pay(post.transaction.token, {
+          onSuccess: async (result) => {},
+          onPending: async (result) => {
+            Get(`/member/pay?id=${result.order_id}`).then((res) => {
+              if (res.response.transaction_status === "pending") {
+                Post("/member/createorder", {
+                  data: {
+                    order_id: res.response.order_id,
+                    data: {
+                      ...item,
+                      total: count,
+                      total_price:
+                        item.promo > 0
+                          ? count * (item.price * ((100 - item.promo) / 100))
+                          : count * item.price,
+                    },
+                  },
+                }).then((res) => {
+                  console.log(res, "res");
+                  if (res.status === false) {
+                    alert("Stock is not enough");
+                  } else {
+                    alert("Success");
+                  }
+                });
+              }
+            });
+          },
+          onError: async (result) => {
+            return alert("Error");
+            // return settemp(temp.concat(result));
+          },
+        });
+      }
+    } else {
+      router.push("/member/login");
+    }
+  };
+  const addTocart = () => {
+    if (count > 0) {
+      const cookies = new Cookies();
+      const user = cookies.get("user");
+      Post("/member/cart", {
+        data: {
+          ...item,
+          total: count,
+          total_price:
             item.promo > 0
               ? count * (item.price * ((100 - item.promo) / 100))
               : count * item.price,
-          email: user.email,
-          first_name: user.name,
-          last_name: user.name,
-          phone: user.phone,
-        }),
-      }).then((res) => res.json());
-      console.log(item.promo);
-      window.snap.pay(post.transaction.token, {
-        onSuccess: async (result) => {},
-        onPending: async (result) => {
-          Get(`/member/pay?id=${result.order_id}`).then((res) => {
-            if (res.response.transaction_status === "pending") {
-              Post("/member/createorder", {
-                data: {
-                  order_id: res.response.order_id,
-                  data: {
-                    ...item,
-                    total: count,
-                    total_price:
-                      item.promo > 0
-                        ? count * (item.price * ((100 - item.promo) / 100))
-                        : count * item.price,
-                  },
-                },
-              }).then((res) => {
-                console.log(res, "res");
-                if (res.status === false) {
-                  alert("Stock is not enough");
-                } else {
-                  alert("Success");
-                }
-              });
-            }
-          });
         },
-        onError: async (result) => {
-          return alert("Error");
-          // return settemp(temp.concat(result));
-        },
+        user_id: user._id,
       });
-    } else {
-      router.push("/member/login");
     }
   };
   return (
@@ -212,7 +230,8 @@ export default function PilihProduk({ item }) {
                   >
                     Beli Sekarang
                   </CButton>
-                  <CButton className="mx-3"
+                  <CButton
+                    className="mx-3"
                     style={{
                       width: "150px",
                       fontSize: "14px",
@@ -220,7 +239,7 @@ export default function PilihProduk({ item }) {
                       border: "none",
                       borderRadius: "0px",
                     }}
-                    onClick={opneSnap}
+                    onClick={addTocart}
                     // href="/member/pengiriman"
                   >
                     Add To Cart

@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { Get, Post, Put } from "../../utils/api";
+import { Delete, Get, Post, Put } from "../../utils/api";
 import formatter from "../../utils/currency";
 import ReactStars from "react-rating-stars-component";
 import {
@@ -17,64 +17,10 @@ import {
   CModalTitle,
 } from "@coreui/react";
 import Cookies from "universal-cookie";
-import findmekanik from "../api/member/findmekanik";
-const BillCard = ({ item }) => {
-  const [star, setstar] = useState(0);
-  const [comment, setComment] = useState("");
-  const valid = star > 0 && comment.length > 0;
 
-  const postComment = async () => {
-    const cookie = new Cookies();
-    const user = cookie.get("user");
-    if (valid) {
-      Put(`/member/review?id=${item.data._id}`, {
-        data: {
-          user_id: user._id,
-          name: user.name,
-          star: star,
-          comment: comment,
-        },
-      });
-      Put(`/admin/transaksi/`, {
-        data: {
-          ...item,
-          review: {
-            star: star,
-            comment: comment,
-          },
-        },
-      });
-    }
-  };
-  const [Reason, setReason] = useState("");
-  const [Modal, setModal] = useState(false);
-  const modalShow = () => {
-    setModal(true);
-  };
-  const handleSubmit = async (e) => {
-    const cookie = new Cookies();
-    const user = cookie.get("user");
-    e.preventDefault();
-    Post("/member/garansi", {
-      ...item,
-      user,
-      reason: Reason,
-    });
-    setModal(false);
-  };
-  const [mekanik, setmekanik] = useState("");
-  const findMekanik = async (id) => {
-    const temp = await Get(`/member/findmekanik?id=${id}`);
-    setmekanik(temp?.data?.name);
-  };
-  useEffect(() => {
-    if (
-      typeof item.data.list_mekanik !== "undefined" &&
-      item.data.list_mekanik.length > 0
-    ) {
-      findMekanik(item?.data?.list_mekanik[0]);
-    }
-  }, []);
+import Script from "next/script";
+import findmekanik from "../api/member/findmekanik";
+const CartCard = ({ item }) => {
   return (
     <>
       <div className="container my-4">
@@ -82,46 +28,48 @@ const BillCard = ({ item }) => {
           <div className="col-md-12">
             <div className="card">
               <div className="card-header">
-                <h4>Order id : {item.order_id} </h4>
+                <h4>Order id : {item._id} </h4>
               </div>
               <div className="card-body">
                 <div className="row mb-4">
                   <div className="col-aute">
                     <div className="d-flex flex-row justify-content-between">
                       <strong>
-                        {item.data.tag === "service"
+                        {item.tag === "service"
                           ? "Nama Service"
                           : "Nama Barang"}
                       </strong>
-                      <div>{item.data.name}</div>
+                      <div>{item.name}</div>
                     </div>
                     <div className="d-flex flex-row justify-content-between">
                       <strong>
                         {" "}
-                        {item.data.tag === "service"
+                        {item.tag === "service"
                           ? "Harga Service"
                           : "Harga Barang"}
                       </strong>
-                      <div>Rp. {formatter(item.data.price)}</div>
+                      <div>Rp. {formatter(item.price)}</div>
                     </div>
                     <div className="d-flex flex-row justify-content-between">
                       <strong>Jumlah Barang</strong>
-                      <div>{item.data.total}</div>
+                      <div>{item.total}</div>
+                    </div>
+                    <div className="d-flex flex-row justify-content-between">
+                      <strong>Diskon</strong>
+                      <div>{item.promo}%</div>
                     </div>
                     <div className="d-flex flex-row justify-content-between">
                       <strong>Total Harga</strong>
-                      <div>
-                        Rp. {formatter(item.data.price * item.data.total)}
-                      </div>
+                      <div>Rp. {formatter(item.total_price)}</div>
                     </div>
-                    <div className="d-flex flex-row justify-content-between">
+                    {/* <div className="d-flex flex-row justify-content-between">
                       <strong>Status</strong>
                       <div>
                         {typeof item.status === "undefined"
                           ? "Di proses"
                           : item.status}
                       </div>
-                    </div>
+                    </div> */}
                     {typeof item.no_resi !== "undefined" && (
                       <>
                         <div className="d-flex flex-row justify-content-between">
@@ -135,15 +83,6 @@ const BillCard = ({ item }) => {
                         </div>
                       </>
                     )}
-                    {typeof item.data.list_mekanik !== "undefined" && (
-                      <>
-                        <div className="d-flex flex-row justify-content-between">
-                          <strong>Nama Mekanik</strong>
-                          <div>{mekanik}</div>
-                        </div>
-                      </>
-                    )}
-
                     {item.status === "selesai" &&
                       (typeof item.review === "undefined" ? (
                         <div className="d-flex flex-row justify-content-between my-4">
@@ -248,7 +187,7 @@ const BillCard = ({ item }) => {
         </div>
       </div>
 
-      <CModal visible={Modal} onClose={() => setModal(!Modal)}>
+      {/* <CModal visible={Modal} onClose={() => setModal(!Modal)}>
         <CModalHeader onClose={() => setModal(!Modal)}>
           <CModalTitle>Klaim Garansi</CModalTitle>
         </CModalHeader>
@@ -277,28 +216,99 @@ const BillCard = ({ item }) => {
             </CButton>
           </CForm>
         </CModalBody>
-      </CModal>
+      </CModal> */}
     </>
   );
 };
 
-export default function bill() {
+export default function cart() {
   const [data, setdata] = useState([]);
-  const getBill = () => {
-    Get("/member/bill").then((res) => {
-      console.log(res);
+  const getMember = () => {
+    const cookies = new Cookies();
+    const user_id = cookies.get("user");
+    Get("/member/cart?user_id=" + user_id._id).then((res) => {
       setdata(res.data);
     });
   };
   useEffect(() => {
-    getBill();
+    getMember();
   }, []);
+  const opneSnap = async () => {
+    const cookies = new Cookies();
+    const user = cookies.get("user");
+    const token = cookies.get("token");
+    const price = data.reduce((a, b) => a + (b.total_price || 0), 0);
+    if (typeof user !== "undefined") {
+      const post = await fetch("http://localhost:3000/api/member/pay", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        method: "POST",
+        body: JSON.stringify({
+          price: price,
+          email: user.email,
+          first_name: user.name,
+          last_name: user.name,
+          phone: user.phone,
+        }),
+      }).then((res) => res.json());
+
+      window.snap.pay(post.transaction.token, {
+        onSuccess: async (result) => {},
+        onPending: async (result) => {
+          Get(`/member/pay?id=${result.order_id}`).then(async (res) => {
+            if (res.response.transaction_status === "pending") {
+              try {
+                for (let i = 0; i < data.length; i++) {
+                  await Post("/member/createorder", {
+                    data: {
+                      order_id: res.response.order_id,
+                      data: {
+                        ...data[i],
+                        total: data[i].total,
+                        total_price: data[i].total_price,
+                      },
+                    },
+                  });
+                }
+                await Delete("/member/cart?user_id=" + user._id);
+                alert("Pembayaran Berhasil");
+                getMember();
+              } catch (error) {}
+            }
+          });
+        },
+        onError: async (result) => {
+          return alert("Error");
+          // return settemp(temp.concat(result));
+        },
+      });
+    } else {
+      router.push("/member/login");
+    }
+  };
   return (
     <>
+      <Script
+        src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-A5zLo_R0ygqCcWAO"
+      />
       <Header />
       {data.map((item) => {
-        return <BillCard item={item} />;
+        return <CartCard item={item} />;
       })}
+      <CButton
+        style={{
+          alignSelf: "flex-end",
+          display: "flex",
+          marginLeft: "auto",
+          marginRight: 30,
+        }}
+        onClick={opneSnap}
+      >
+        Checkout
+      </CButton>
 
       <Footer />
     </>

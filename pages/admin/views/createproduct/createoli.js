@@ -22,9 +22,11 @@ import {
   CTableRow,
   CTabPane,
 } from "@coreui/react";
+import Select from "react-select";
 import { GetStaticProps } from "next";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from "universal-cookie";
 
 const Modal = ({
   visible,
@@ -337,6 +339,7 @@ const createoli = () => {
   const [data, setdata] = useState({});
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const cookies = new Cookies();
   const edit = (e, article) => {
     settype("edit");
 
@@ -354,9 +357,11 @@ const createoli = () => {
       const postData = await fetch("http://localhost:3000/api/admin/product");
 
       const res = await postData.json();
+
       dispatch({
         type: "SET_PRODUCT",
         product: [...res.data],
+        temp: [...res.data],
       });
     } catch (error) {
       throw error;
@@ -380,11 +385,44 @@ const createoli = () => {
   useEffect(() => {
     getData();
   }, [refresh]);
+  const options = [
+    { value: "sparepart", label: "sparepart" },
+    { value: "ban", label: "ban" },
+    { value: "service", label: "service" },
+    { value: "aki", label: "aki" },
+    { value: "oli", label: "oli" },
+  ];
   return (
     <>
       <CButton color="primary" className={"mb-2"} onClick={create}>
         Create New
       </CButton>
+
+      <Select
+        options={options}
+        isMulti={true}
+        onChange={(e) => {
+          if (e.length > 0) {
+            const example = [];
+            for (let i = 0; i < e.length; i++) {
+              const t = state.temp.filter((item) => item.tag === e[i].value);
+              example.push(...t);
+            }
+
+            dispatch({
+              type: "SET_PRODUCT",
+              product: [...example],
+              temp: [...state.temp],
+            });
+          } else {
+            dispatch({
+              type: "SET_PRODUCT",
+              product: [...state.temp],
+              temp: [...state.temp],
+            });
+          }
+        }}
+      />
 
       <TableTrue
         state={state}
@@ -393,7 +431,6 @@ const createoli = () => {
         getdata={getData}
         editFuntion={edit}
       />
-
       <Modal
         visible={showModal}
         setVisible={setshowModal}

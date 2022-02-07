@@ -52,9 +52,19 @@ const Product = new mongoose.Schema({
     ref: "Mekanik",
     required: false,
   },
-  product_addtional: {
+  product: {
     type: Array,
-    default: [],
+    required: false,
+  },
+  product_addtional: {
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        stock: Number,
+        ref: "Product",
+        default: [],
+      },
+    ],
   },
   created_at: {
     type: Date,

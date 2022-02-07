@@ -111,6 +111,20 @@ export default function HeaderTop() {
             }}
           >
             <IC_CART />
+            <CNavLink className={"py-0 px-0 text-white"} href="/member/cart">
+            Cart
+            </CNavLink>
+          </div>
+          <div
+            style={{
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "column",
+              height: 60,
+              justifyContent: "space-between",
+            }}
+          >
+            <IC_CART />
             <CNavLink className={"py-0 px-0 text-white"} href="/member/bill">
               Order
             </CNavLink>

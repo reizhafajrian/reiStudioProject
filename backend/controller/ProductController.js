@@ -4,8 +4,21 @@ import ProductSchema from "../models/product";
 const ProductController = {
   createProduct: async (req, res) => {
     const { data } = req.body;
+    console.log(data);
 
-    const product = await ProductSchema.create(data);
+    const product = await ProductSchema.create({
+      name: data.name,
+      image_1: data.image_1,
+      image_2: data.image_2,
+      image_3: data.image_3,
+      desc: data.desc,
+      price: data.price,
+      promo: data.promo,
+      stock: data.stock,
+      tag: data.tag,
+      product: data.product,
+      product_addtional: data.product_addtional,
+    });
     return res.status(200).json({
       status: 200,
       data: product,

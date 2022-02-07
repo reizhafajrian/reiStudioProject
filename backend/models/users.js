@@ -18,6 +18,11 @@ const User = new mongoose.Schema({
     type: String,
     required: true,
   },
+  cart: {
+    type: Array,
+    required: false,
+    default: [],
+  },
   privacy_policy: {
     type: Boolean,
     required: true,

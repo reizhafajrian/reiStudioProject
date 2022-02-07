@@ -5,6 +5,7 @@ const initialState = {
   dataProduct: [],
   transaksi: [],
   mekanik: [],
+  temp: [],
 };
 
 const changeState = (state = initialState, action) => {
@@ -12,7 +13,7 @@ const changeState = (state = initialState, action) => {
     case "set":
       return { ...state, ...action.rest };
     case "SET_PRODUCT":
-      return { ...state, dataProduct: action.product };
+      return { ...state, dataProduct: action.product, temp: action.temp };
     case "SET_TRANSAKSI":
       return { ...state, transaksi: action.transaksi };
     case "SET_MEKANIK":

@@ -5,6 +5,7 @@ import {
   CFormLabel,
   CFormSelect,
   CFormTextarea,
+  CInputGroup,
   CModal,
   CModalBody,
   CModalFooter,
@@ -42,7 +43,8 @@ const Modal = ({
     desc: "",
     price: "",
     promo: "",
-    stock: "",
+    stock: 9999,
+    price_servis: 0,
     // mekanik: "",
     product: [
       {
@@ -59,6 +61,7 @@ const Modal = ({
       .then((res) => {
         console.log(res);
         // setdata(res.data);
+
         setdataProduct(res.data);
       });
   };
@@ -73,6 +76,7 @@ const Modal = ({
         image_1: dataEdit.image_1,
         image_2: dataEdit.image_2,
         image_3: dataEdit.image_3,
+        price_servis: dataEdit.price_servis,
         price: dataEdit.price,
         desc: dataEdit.desc,
         tag: dataEdit.tag,
@@ -92,7 +96,20 @@ const Modal = ({
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify({ data: data }),
+        body: JSON.stringify({
+          data: {
+            ...data,
+            price:
+              Number(data.price_servis) +
+              Number(data.price) +
+              Number(
+                data.product.reduce((a, b) => a + (b.price * b.value || 0), 0)
+              ),
+            product_addtional: data.product.map((item) => {
+              return item.id;
+            }),
+          },
+        }),
       })
         .then((res) => res.json())
         .then((res) => console.log(res))
@@ -225,75 +242,193 @@ const Modal = ({
               />
             </div>
             <div className="mb-3">
-              <CFormLabel htmlFor="exampleFormControlInput1">
-                Add Product
-              </CFormLabel>
-              {data.product.map((item, index) => {
-                return (
-                  <CFormSelect
-                    className="mb-3"
-                    aria-label="Default select example"
-                    onChange={(e) => {
-                      const temp = data.product;
-                      temp[index] = JSON.parse(e.target.value);
+              {type !== "edit" && (
+                <CFormLabel htmlFor="exampleFormControlInput1">
+                  Add Product
+                </CFormLabel>
+              )}
+              {type !== "edit" &&
+                data.product.map((item, index) => {
+                  return (
+                    <div className="d-flex flex-row">
+                      <CFormSelect
+                        className="mb-3"
+                        aria-label="Default select example"
+                        onChange={(e) => {
+                          const temp = data.product;
+                          temp[index] = JSON.parse(e.target.value);
+                          setdata({
+                            ...data,
+                            product: temp,
+                          });
+                        }}
+                      >
+                        <option value="" selected disabled hidden>
+                          Choose here
+                        </option>
+                        {dataProduct.map((item) => {
+                          return (
+                            <>
+                              <option
+                                value={JSON.stringify({
+                                  id: item._id,
+                                  name: item.name,
+                                  price: item.price,
+                                  stock: item.stock,
+                                })}
+                              >
+                                {item.name}
+                              </option>
+                            </>
+                          );
+                        })}
+                      </CFormSelect>
+                      <CInputGroup className="mb-3" style={{ width: 200 }}>
+                        <CButton
+                          onClick={(e) => {
+                            const temp = data.product;
+                            if (
+                              typeof temp[index].value !== "undefined" &&
+                              temp[index].value > 0
+                            ) {
+                              temp[index] = {
+                                ...temp[index],
+                                value:
+                                  typeof temp[index].value !== "undefined"
+                                    ? temp[index].value - 1
+                                    : 1,
+                              };
+
+                              setdata({
+                                ...data,
+                                product: temp,
+                              });
+                            }
+                          }}
+                        >
+                          -
+                        </CButton>
+                        <CFormInput
+                          // placeholder="0"
+                          aria-label="Username"
+                          aria-describedby="basic-addon1"
+                          value={
+                            typeof data.product[index].value !== "undefined"
+                              ? data.product[index].value
+                              : 0
+                          }
+                          disabled
+                        />
+                        <CButton
+                          color="success"
+                          onClick={(e) => {
+                            const temp = data.product;
+
+                            if (typeof temp[index].value !== "undefined") {
+                              if (temp[index].stock > temp[index].value) {
+                                temp[index] = {
+                                  ...temp[index],
+                                  value: temp[index].value + 1,
+                                };
+                                setdata({
+                                  ...data,
+                                  product: temp,
+                                });
+                              }
+                            } else {
+                              if (temp[index].name !== "") {
+                                temp[index] = {
+                                  ...temp[index],
+                                  value: 1,
+                                };
+                                setdata({
+                                  ...data,
+                                  product: temp,
+                                });
+                              }
+                            }
+                          }}
+                        >
+                          +
+                        </CButton>
+                      </CInputGroup>
+                    </div>
+                  );
+                })}
+
+              {type !== "edit" && (
+                <CButton color="secondary" onClick={() => addProduct()}>
+                  Add
+                </CButton>
+              )}
+            </div>
+            {type !== "edit" && (
+              <>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="exampleFormControlInput1">
+                    Harga Product
+                  </CFormLabel>
+                  <CFormInput
+                    type="text"
+                    value={
+                      data.price +
+                      data.product.reduce(
+                        (a, b) => a + (b.price * b.value || 0),
+                        0
+                      )
+                    }
+                    id="tag"
+                    placeholder="Harga Product"
+                    disabled
+                  />
+                </div>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="exampleFormControlInput1">
+                    Harga Servis
+                  </CFormLabel>
+                  <CFormInput
+                    type="text"
+                    value={data.price_servis}
+                    id="tag"
+                    placeholder="Harga Product"
+                    onChange={(e) =>
                       setdata({
                         ...data,
-                        product: temp,
-                      });
-                      console.log(data.product);
-                    }}
-                  >
-                    <option value="" selected disabled hidden>
-                      Choose here
-                    </option>
-                    {dataProduct.map((item) => {
-                      return (
-                        <>
-                          <option
-                            value={JSON.stringify({
-                              id: item._id,
-                              name: item.name,
-                              price: item.price,
-                            })}
-                          >
-                            {item.name}
-                          </option>
-                        </>
-                      );
-                    })}
-                  </CFormSelect>
-                );
-              })}
-
-              <CButton color="secondary" onClick={() => addProduct()}>
-                Add
-              </CButton>
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="exampleFormControlInput1">Harga</CFormLabel>
-              <CFormInput
-                type="text"
-                value={
-                  data.price +
-                  data.product.reduce((a, b) => a + (b.price || 0), 0)
-                }
-                id="tag"
-                placeholder="Harga Product"
-                onChange={(e) =>
-                  setdata({
-                    ...data,
-                    price: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className="mb-3">
+                        price_servis: Number(e.target.value),
+                      })
+                    }
+                  />
+                </div>{" "}
+                <div className="mb-3">
+                  <CFormLabel htmlFor="exampleFormControlInput1">
+                    Harga Total
+                  </CFormLabel>
+                  <CFormInput
+                    type="text"
+                    value={
+                      Number(data.price_servis) +
+                      Number(data.price) +
+                      Number(
+                        data.product.reduce(
+                          (a, b) => a + (b.price * b.value || 0),
+                          0
+                        )
+                      )
+                    }
+                    id="tag"
+                    placeholder="Harga Product"
+                    disabled
+                  />
+                </div>
+              </>
+            )}
+            {/* <div className="mb-3">
               <CFormLabel htmlFor="exampleFormControlInput1">Stock</CFormLabel>
               <CFormInput
                 type="text"
                 value={data.stock}
                 id="tag"
-                placeholder="Stock Barang"
+                placeholder="Stock Servis"
                 onChange={(e) =>
                   setdata({
                     ...data,
@@ -301,7 +436,7 @@ const Modal = ({
                   })
                 }
               />
-            </div>
+            </div> */}
             {/* <div className="mb-3">
               <CFormLabel htmlFor="exampleFormControlInput1">
                 Pilih Mekanik
@@ -463,6 +598,7 @@ const index = () => {
       dispatch({
         type: "SET_PRODUCT",
         product: [...res.data],
+        temp: [...res.data],
       });
     } catch (error) {
       throw error;

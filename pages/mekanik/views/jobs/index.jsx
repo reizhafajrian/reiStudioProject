@@ -381,6 +381,7 @@ const createoli = () => {
       dispatch({
         type: "SET_PRODUCT",
         product: [...res.data],
+        temp: [...res.data],
       });
     } catch (error) {
       throw error;
