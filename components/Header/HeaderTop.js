@@ -18,7 +18,7 @@ import {
   CDropdownDivider,
 } from "@coreui/react";
 import { theme } from "../../constant/theme.js";
-import { IC_CART, IC_SEARCH, IC_USER } from "../../assets";
+import { IC_CART, IC_SEARCH, IC_USER,IC_BILL } from "../../assets";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/router";
 
@@ -124,7 +124,7 @@ export default function HeaderTop() {
               justifyContent: "space-between",
             }}
           >
-            <IC_CART />
+            <IC_BILL />
             <CNavLink className={"py-0 px-0 text-white"} href="/member/bill">
               Order
             </CNavLink>

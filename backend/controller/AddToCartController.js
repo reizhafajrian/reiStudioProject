@@ -51,10 +51,11 @@ const AddToCartController = {
   delete: async (req, res) => {
     try {
       const { user_id } = req.query;
-      const user = await UserSchema.findAndUpdate(
+      const user = await UserSchema.findOneAndUpdate(
         { _id: user_id },
         { cart: [] }
       );
+
       return res.status(200).json({
         code: 200,
         status: true,

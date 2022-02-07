@@ -295,20 +295,29 @@ export default function cart() {
         data-client-key="SB-Mid-client-A5zLo_R0ygqCcWAO"
       />
       <Header />
-      {data.map((item) => {
-        return <CartCard item={item} />;
-      })}
-      <CButton
-        style={{
-          alignSelf: "flex-end",
-          display: "flex",
-          marginLeft: "auto",
-          marginRight: 30,
-        }}
-        onClick={opneSnap}
-      >
-        Checkout
-      </CButton>
+      {data.length > 0 ? (
+        <>
+          {data.map((item) => {
+            return <CartCard item={item} />;
+          })}
+
+          <CButton
+            style={{
+              alignSelf: "flex-end",
+              display: "flex",
+              marginLeft: "auto",
+              marginRight: 30,
+            }}
+            onClick={opneSnap}
+          >
+            Checkout
+          </CButton>
+        </>
+      ) : (
+        <h4 style={{ textAlign: "center", marginTop: 50, marginBottom: 50 }}>
+          anda tidak memiliki produk untuk di checkout
+        </h4>
+      )}
 
       <Footer />
     </>
