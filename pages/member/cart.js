@@ -263,7 +263,7 @@ export default function cart() {
                 for (let i = 0; i < data.length; i++) {
                   await Post("/member/createorder", {
                     data: {
-                      order_id: res.response.order_id,
+                      order_id: res.response.order_id + i,
                       data: {
                         ...data[i],
                         total: data[i].total,
