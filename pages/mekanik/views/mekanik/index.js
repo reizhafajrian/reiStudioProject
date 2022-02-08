@@ -287,9 +287,9 @@ const index = () => {
   }, [refresh]);
   return (
     <>
-      <CButton color="primary" className={"mb-2"} onClick={create}>
+      {/* <CButton color="primary" className={"mb-2"} onClick={create}>
         Create New
-      </CButton>
+      </CButton> */}
 
       <TableTrue
         state={state}
