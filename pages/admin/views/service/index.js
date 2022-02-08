@@ -170,7 +170,7 @@ const Modal = ({
   return (
     <CModal visible={visible} onClose={() => setVisible(false)}>
       <CModalHeader onClose={() => setVisible(false)}>
-        <CModalTitle>Create Oli</CModalTitle>
+        <CModalTitle>Create Service</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm>

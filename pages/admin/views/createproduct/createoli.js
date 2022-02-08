@@ -128,7 +128,7 @@ const Modal = ({
   return (
     <CModal visible={visible} onClose={() => setVisible(false)}>
       <CModalHeader onClose={() => setVisible(false)}>
-        <CModalTitle>Create Oli</CModalTitle>
+        <CModalTitle>Create Product</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm>
@@ -210,6 +210,21 @@ const Modal = ({
                   setdata({
                     ...data,
                     price: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exampleFormControlInput1">Tag</CFormLabel>
+              <CFormInput
+                type="text"
+                value={data.tag}
+                id="tag"
+                placeholder="tag produk"
+                onChange={(e) =>
+                  setdata({
+                    ...data,
+                    tag: e.target.value,
                   })
                 }
               />
