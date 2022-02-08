@@ -1,6 +1,7 @@
 import IC_USER from "./icon/ic_user.svg";
 import IC_CART from "./icon/ic_shopping_cart.svg";
 import IC_BILL from "./icon/ic_bill.svg";
+import IC_DELETE from "./icon/ic_delete.svg";
 import IC_SEARCH from "./icon/ic_search.svg";
 import IMAGE_1 from "./img/image_1.png";
 import IMAGE_2 from "./img/image_2.png";
@@ -36,6 +37,7 @@ export {
   PRODUK_6,
   AKI,
   OLI,
+  IC_DELETE,
   // PRODUK_4A,
   LINING,
   SHOPPINGCART

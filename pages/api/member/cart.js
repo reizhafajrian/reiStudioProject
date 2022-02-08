@@ -8,4 +8,5 @@ export default connectDB(
     .post(AddToCartController.create)
     .get(AddToCartController.get)
     .delete(AddToCartController.delete)
+    .put(AddToCartController.deleteItem)
 );

@@ -17,10 +17,20 @@ import {
   CModalTitle,
 } from "@coreui/react";
 import Cookies from "universal-cookie";
-
+import { IC_DELETE } from "../../assets";
+import { useRouter } from "next/router";
 import Script from "next/script";
 import findmekanik from "../api/member/findmekanik";
 const CartCard = ({ item }) => {
+  const router = useRouter();
+  const cookies = new Cookies();
+  const user = cookies.get("user");
+
+  const deleteItem = async () => {
+    await Put(`/member/cart?id=${item._id}&user=${user._id}`);
+
+    window.location.reload();
+  };
   return (
     <>
       <div className="container my-4">
@@ -61,6 +71,11 @@ const CartCard = ({ item }) => {
                     <div className="d-flex flex-row justify-content-between">
                       <strong>Total Harga</strong>
                       <div>Rp. {formatter(item.total_price)}</div>
+                    </div>
+                    <div className="d-flex flex-row justify-content-between mt-3">
+                      <CButton onClick={deleteItem}>
+                        <IC_DELETE />
+                      </CButton>
                     </div>
                     {/* <div className="d-flex flex-row justify-content-between">
                       <strong>Status</strong>

@@ -20,10 +20,10 @@ const AppHeaderDropdown = () => {
   const router = useRouter();
   const logout = () => {
     const cookies = new Cookies();
-    cookies.remove("user-admin", { path: "/" });
-    cookies.remove("token-admin", { path: "/" });
+    cookies.remove("user-mekanik", { path: "/" });
+    cookies.remove("token-mekanik", { path: "/" });
 
-    router.push("/admin/login");
+    router.push("/mekanik/login");
   };
   return (
     <CDropdown variant="nav-item">

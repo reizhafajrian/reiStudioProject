@@ -69,6 +69,29 @@ const AddToCartController = {
       });
     }
   },
+  deleteItem: async (req, res) => {
+    try {
+      const { id, user } = req.query;
+      let dataArray = [];
+      const userData = await UserSchema.findOne({ _id: user });
+      const temp = userData.cart.findIndex((a) => a._id === id);
+      if (temp > -1) {
+        userData.cart.splice(temp, 1);
+        userData.save();
+      }
+      return res.status(200).json({
+        code: 200,
+        status: true,
+        data: user.cart,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        code: 500,
+        status: false,
+        data: error,
+      });
+    }
+  },
 };
 
 export default AddToCartController;
