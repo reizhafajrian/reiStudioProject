@@ -25,7 +25,7 @@ const ProductController = {
     });
   },
   getData: async (req, res) => {
-    const { search, ex } = req.query;
+    const { search, ex, type } = req.query;
     if (typeof search === "undefined" && typeof ex === "undefined") {
       const product = await ProductSchema.find();
       return res.status(200).json({
@@ -34,12 +34,19 @@ const ProductController = {
       });
     }
     if (search === "service") {
-      const product = await ProductSchema.find({ tag: "service" }).populate({
-        path: "list_mekanik",
-        select: "_id name",
-      });
-      console.log(product, "example");
+      let product;
+      console.log(type,"type")
+      if (type === "member") {
+        product = await ProductSchema.find({
+          list_mekanik: { $exists: true, $not: { $size: 0 } },
+        });
 
+      } else {
+        product = await ProductSchema.find({ tag: "service" }).populate({
+          path: "list_mekanik",
+          select: "_id name",
+        });
+      }
       return res.status(200).json({
         status: 200,
         data: product,

@@ -7,7 +7,7 @@ import { CContainer } from "@coreui/react";
 export default function service() {
   const [data, setdata] = useState([]);
   const getData = () => {
-    fetch("http://localhost:3000/api/admin/product?search=service")
+    fetch("http://localhost:3000/api/admin/product?search=service&type=member")
       .then((res) => res.json())
       .then((res) => {
         setdata(res.data);
