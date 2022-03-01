@@ -176,7 +176,7 @@ const Modal = ({
         <CForm>
           <>
             <div className="mb-3">
-              <CFormLabel htmlFor="exampleFormControlInput1">name</CFormLabel>
+              <CFormLabel htmlFor="exampleFormControlInput1">nama service</CFormLabel>
               <CFormInput
                 type="text"
                 id="name"
@@ -517,12 +517,14 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
       <CTableHead>
         <CTableRow>
           <CTableHeaderCell scope="col">#</CTableHeaderCell>
-          <CTableHeaderCell scope="col">name</CTableHeaderCell>
+          <CTableHeaderCell scope="col">id service</CTableHeaderCell>
+          <CTableHeaderCell scope="col">nama servis</CTableHeaderCell>
           <CTableHeaderCell scope="col">stock</CTableHeaderCell>
           <CTableHeaderCell scope="col">promo</CTableHeaderCell>
           <CTableHeaderCell scope="col">price</CTableHeaderCell>
           <CTableHeaderCell scope="col">tag</CTableHeaderCell>
           <CTableHeaderCell scope="col">desc</CTableHeaderCell>
+          <CTableHeaderCell scope="col">list mekanik</CTableHeaderCell>
           {/* <CTableHeaderCell scope="col">list-mekanik</CTableHeaderCell> */}
           <CTableHeaderCell scope="col" className={"text-center"}>
             Aksi
@@ -536,12 +538,17 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
               <>
                 <CTableRow key={item._id}>
                   <CTableDataCell scope={"row"}>{++index}</CTableDataCell>
+                  <CTableDataCell>{item._id}</CTableDataCell>
                   <CTableDataCell>{item.name}</CTableDataCell>
                   <CTableDataCell>{item.stock}</CTableDataCell>
                   <CTableDataCell>{item.promo}</CTableDataCell>
                   <CTableDataCell>{item.price}</CTableDataCell>
                   <CTableDataCell>{item.tag}</CTableDataCell>
                   <CTableDataCell>{item.desc}</CTableDataCell>
+                  <CTableDataCell>
+                    {item.list_mekanik.map((res) => res.name + ",")}
+                  </CTableDataCell>
+
                   {/* <CTableDataCell>{item.list_mekanik.map((item,index)=>{
                     return ()
                   })}</CTableDataCell> */}

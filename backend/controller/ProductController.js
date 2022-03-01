@@ -34,9 +34,12 @@ const ProductController = {
       });
     }
     if (search === "service") {
-      const product = await ProductSchema.find({
-        list_mekanik: { $exists: true, $not: { $size: 0 } },
+      const product = await ProductSchema.find({ tag: "service" }).populate({
+        path: "list_mekanik",
+        select: "_id name",
       });
+      console.log(product, "example");
+
       return res.status(200).json({
         status: 200,
         data: product,

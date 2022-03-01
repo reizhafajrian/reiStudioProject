@@ -1,6 +1,7 @@
 import { verifyToken } from "../middleware/jwt";
 import UserSchema from "../models/Users";
 import ProductSchema from "../models/product";
+import MekanikSchema from "../models/mekanik";
 const OderController = {
   createOrder: async function (req, res) {
     const { authorization } = req.headers;
@@ -14,7 +15,10 @@ const OderController = {
 
     const temp = product.stock - data.data.total;
     if (product.tag === "service") {
-      console.log("masuk", product);
+      const findMekanik = await MekanikSchema.findOne({
+        _id: product.list_mekanik[0],
+      });
+
       if (temp > 0) {
         for (let i = 0; i < product.product.length; i++) {
           const value = product.product[i].value;
@@ -28,6 +32,7 @@ const OderController = {
           }
         }
         product.stock = temp;
+        product.list_mekanik.shift();
         product.save();
         if (token && valid.status) {
           const user = await UserSchema.findOne({ _id: valid.data.user._id });
@@ -36,7 +41,10 @@ const OderController = {
           example = user.order.filter(
             (v, i, a) => a.findIndex((t) => t.order_id === v.order_id) === i
           );
+
+          findMekanik.order.push(data.order_id);
           user.order = example;
+          await findMekanik.save();
           await user.save();
           return res.status(200).json({
             code: 200,

@@ -309,6 +309,7 @@ const TableTrue = ({
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">order_id</CTableHeaderCell>
             <CTableHeaderCell scope="col">name</CTableHeaderCell>
             <CTableHeaderCell scope="col">stock</CTableHeaderCell>
             <CTableHeaderCell scope="col">promo</CTableHeaderCell>
@@ -336,6 +337,7 @@ const TableTrue = ({
                     <>
                       <CTableRow key={item.order_id}>
                         <CTableDataCell scope={"row"}>{++index}</CTableDataCell>
+                        <CTableDataCell>{item.order_id}</CTableDataCell>
                         <CTableDataCell>{item.data.name}</CTableDataCell>
                         <CTableDataCell>{item.data.stock}</CTableDataCell>
                         <CTableDataCell>{item.data.promo}</CTableDataCell>

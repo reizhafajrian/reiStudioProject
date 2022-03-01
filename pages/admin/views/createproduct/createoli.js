@@ -299,6 +299,7 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
       <CTableHead>
         <CTableRow>
           <CTableHeaderCell scope="col">#</CTableHeaderCell>
+          <CTableHeaderCell scope="col">id product</CTableHeaderCell>
           <CTableHeaderCell scope="col">name</CTableHeaderCell>
           <CTableHeaderCell scope="col">stock</CTableHeaderCell>
           <CTableHeaderCell scope="col">promo %</CTableHeaderCell>
@@ -317,6 +318,7 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
               <>
                 <CTableRow key={item._id}>
                   <CTableDataCell scope={"row"}>{++index}</CTableDataCell>
+                  <CTableDataCell>{item._id}</CTableDataCell>
                   <CTableDataCell>{item.name}</CTableDataCell>
                   <CTableDataCell>{item.stock}</CTableDataCell>
                   <CTableDataCell>{item.promo}%</CTableDataCell>

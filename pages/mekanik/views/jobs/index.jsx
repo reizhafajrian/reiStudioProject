@@ -234,7 +234,7 @@ const Modal = ({
                 }
               />
             </div>
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <CFormLabel htmlFor="exampleFormControlInput1">Promo</CFormLabel>
               <CFormInput
                 type="text"
@@ -248,7 +248,7 @@ const Modal = ({
                   })
                 }
               />
-            </div>
+            </div> */}
             <div className="mb-3">
               <CFormLabel htmlFor="exampleFormControlTextarea1">
                 Description
@@ -311,7 +311,7 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
           <CTableHeaderCell scope="col">#</CTableHeaderCell>
           <CTableHeaderCell scope="col">name</CTableHeaderCell>
           <CTableHeaderCell scope="col">stock</CTableHeaderCell>
-          <CTableHeaderCell scope="col">promo %</CTableHeaderCell>
+          {/* <CTableHeaderCell scope="col">promo %</CTableHeaderCell> */}
           <CTableHeaderCell scope="col">price</CTableHeaderCell>
           <CTableHeaderCell scope="col">tag</CTableHeaderCell>
           <CTableHeaderCell scope="col">desc</CTableHeaderCell>
@@ -329,7 +329,7 @@ const TableTrue = ({ state, type, deleteFunction, getdata, editFuntion }) => {
                   <CTableDataCell scope={"row"}>{++index}</CTableDataCell>
                   <CTableDataCell>{item.name}</CTableDataCell>
                   <CTableDataCell>{item.stock}</CTableDataCell>
-                  <CTableDataCell>{item.promo}%</CTableDataCell>
+                  {/* <CTableDataCell>{item.promo}%</CTableDataCell> */}
                   <CTableDataCell>{item.price}</CTableDataCell>
                   <CTableDataCell>{item.tag}</CTableDataCell>
                   <CTableDataCell>{item.desc}</CTableDataCell>

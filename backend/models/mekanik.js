@@ -23,6 +23,11 @@ const Mekanik = new mongoose.Schema({
     type: String,
     required: true,
   },
+  order: {
+    type: Array,
+    required: true,
+    default: [],
+  },
 
   created_at: {
     type: Date,

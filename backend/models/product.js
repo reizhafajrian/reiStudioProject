@@ -37,6 +37,7 @@ const Product = new mongoose.Schema({
     type: Array,
     required: false,
     default: [],
+    ref: "Mekanik",
   },
   tag: {
     type: String,

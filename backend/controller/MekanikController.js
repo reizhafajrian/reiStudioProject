@@ -65,7 +65,7 @@ const MekanikController = {
         },
         { password: 0, _id: 1, __v: 0 }
       );
-      console.log(req.body);
+
 
       if (!user) {
         return res.status(401).json({
@@ -74,7 +74,7 @@ const MekanikController = {
         });
       }
       const isMatch = await comparePassword(passwordEncrypt, user.password);
-      console.log(isMatch);
+
       if (isMatch) {
         const token = await generateToken(user);
         return res.status(200).json({
